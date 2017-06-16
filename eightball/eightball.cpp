@@ -14,6 +14,7 @@
 #include <iostream>
 #include <sstream>
 #include <cstring>
+#include <memory>
 #include <chrono>
 #include <random>
 
