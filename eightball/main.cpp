@@ -31,7 +31,6 @@ int main(int argc, const char * argv[]) {
             }
             break;
         }
-
         
         wcout << endl << EightBallASCII(ComputeMagicAnswer(question)) << endl;
     } while (true);
