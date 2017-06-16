@@ -21,7 +21,8 @@
 using namespace std;
 using namespace std::chrono;
 
-namespace eightball {
+namespace eightball
+{
     wstring RetrieveQuestion()
     {
         wstring question;
