@@ -1,4 +1,22 @@
 # eightball
-You remember the Magic 8-ball, right? Well this is like that, but rendered in pixels.
+You remember the Magic 8-Ball 🎱, right? Well this is like that, but rendered in pixels.
 
 If you're nostalgic like me, or just bored, the 8-ball command-line utility is a great way to supercharge your nerdiness.
+
+## Compiling
+
+At this time I have added both a Visual Studio 2017 and Xcode project for building Magic 8-Ball. You will need a C++11-compliant compiler to build it with anything crappier than those tools.
+
+#### Xcode
+In order to build Magic 8-Ball and make it avaialble in your account on macOS, you will need to edit the `Run` profile:
+
+![Editing the run profile](http://wyatt.computer/pub/eightball-1.png)
+
+then change the configuration to `Release`:
+
+![Changing to release](http://wyatt.computer/pub/eightball-2.png)
+
+finally, ⌘+B to build, and then you can highlight `eightball` underneath the `Products` node, which will show its full path on the right side of the IDE. Hit the -> icon and that'll open Finder. Then, copy it to `/usr/local/bin` and you're good to go.
+
+#### Visual Studio
+Just build in `Release` mode, then copy the resulting `eightball.exe` from the `Release` folder to anywhere in your `%PATH%`.
