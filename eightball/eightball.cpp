@@ -1,5 +1,11 @@
 ﻿//
-// eightball command-line utility
+// The Magic 8-ball
+//
+// Created by Ryan Lederman <lederman@gmail.com> on 14 June 2017
+//
+// License: MIT
+// Original Copyright (C) Mattel Inc. This program is not affiliated with Mattel Inc.,
+// and they retain all intellecutal property rights to the Magic 8-Ball.
 //
 
 #include "eightball.h"
@@ -7,7 +13,9 @@
 
 #include <iostream>
 #include <sstream>
+#include <cstring>
 #include <chrono>
+#include <random>
 
 using namespace std;
 using namespace std::chrono;
@@ -29,30 +37,27 @@ namespace eightball {
 
             size_t questionLen = question.length();
             size_t buflen = questionLen * 2 + sizeof(uint32_t) + sizeof(time_t);
-            uint8_t* buf = new uint8_t[buflen];
+            shared_ptr<uint8_t> buf(new uint8_t[buflen]);
 
             if (buf) {
                 // Fill buffer with input question, last CRC checksum (if present), and current time.
-                memcpy(buf, question.c_str(), questionLen * 2);
-                memcpy(buf + (questionLen * 2), &lastCrc32, sizeof(uint32_t));
+                memmove(buf.get(), question.c_str(), questionLen * 2);
+                memmove(buf.get() + (questionLen * 2), &lastCrc32, sizeof(uint32_t));
 
                 microseconds now = duration_cast<microseconds>(steady_clock::now().time_since_epoch());
-                memcpy(buf + (questionLen * 2) + sizeof(uint32_t), &now, sizeof(microseconds::rep));
+                memmove(buf.get() + (questionLen * 2) + sizeof(uint32_t), &now, sizeof(microseconds::rep));
 
                 // Compute CRC32.
-                uint32_t crc32 = crc32c(0U, buf, buflen);
+                uint32_t crc32 = crc32c(0U, buf.get(), buflen);
 
                 // Store checksum for next pass.
                 lastCrc32 = crc32;
 
-                // Seed RNG with new checksum.
-                srand(crc32);
+                // Seed RNG with new checksum (uses 32-bit mersenne twister).
+                shared_ptr<mt19937> rng(new mt19937(crc32));
 
                 // Look up magic answer!
-                retval = Answers[rand() % (sizeof(Answers) / sizeof(Answers[0]))];
-
-                delete[] buf;
-                buf = nullptr;
+                retval = rng ? Answers[(*rng)() % (sizeof(Answers) / sizeof(Answers[0]))].text : L"ERROR!";
             }
         }
 

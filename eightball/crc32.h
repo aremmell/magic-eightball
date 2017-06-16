@@ -1,3 +1,13 @@
+//
+// The Magic 8-ball
+//
+// Created by Ryan Lederman <lederman@gmail.com> on 14 June 2017
+//
+// License: MIT
+// Original Copyright (C) Mattel Inc. This program is not affiliated with Mattel Inc.,
+// and they retain all intellecutal property rights to the Magic 8-Ball.
+//
+
 #ifndef CRC32_H
 #define CRC32_H
 

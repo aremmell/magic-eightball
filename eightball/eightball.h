@@ -1,5 +1,11 @@
 //
-// eightball command-line utility
+// The Magic 8-ball
+//
+// Created by Ryan Lederman <lederman@gmail.com> on 14 June 2017
+//
+// License: MIT
+// Original Copyright (C) Mattel Inc. This program is not affiliated with Mattel Inc.,
+// and they retain all intellecutal property rights to the Magic 8-Ball.
 //
 
 #ifndef EIGHTBALL_H
@@ -9,28 +15,41 @@
 
 namespace eightball
 {
-    static const wchar_t* Answers[] =
+    enum class AnswerType : uint8_t
     {
-        L"As I see it, yes",
-        L"It is certain",
-        L"It is decidedly so",
-        L"Most likely",
-        L"Outlook good",
-        L"Signs point to yes",
-        L"Without a doubt",
-        L"Yes",
-        L"Yes, definitely",
-        L"You may rely on it",
-        L"Reply hazy; try again",
-        L"Ask again later",
-        L"Better not tell you",
-        L"Cannot say at this time",
-        L"Concentrate and ask again",
-        L"Don't count on it",
-        L"My reply is no",
-        L"My sources say no",
-        L"Outlook not good",
-        L"Very doubtful",
+        Affirmative = 0U,
+        Noncommital,
+        Negative
+    };
+    
+    struct EightBallAnswer
+    {
+        AnswerType type;
+        const wchar_t *text;
+    };
+    
+    static const EightBallAnswer Answers[] =
+    {
+        { AnswerType::Affirmative, L"It is certain" },
+        { AnswerType::Affirmative, L"It is decidedly so" },
+        { AnswerType::Affirmative, L"Without a doubt" },
+        { AnswerType::Affirmative, L"Yes definitely" },
+        { AnswerType::Affirmative, L"You may rely on it" },
+        { AnswerType::Affirmative, L"As I see it, yes" },
+        { AnswerType::Affirmative, L"Most likely" },
+        { AnswerType::Affirmative, L"Outlook good" },
+        { AnswerType::Affirmative, L"Yes" },
+        { AnswerType::Affirmative, L"Signs point to yes" },
+        { AnswerType::Noncommital, L"Reply hazy try again" },
+        { AnswerType::Noncommital, L"Ask again later" },
+        { AnswerType::Noncommital, L"Better not tell you now" },
+        { AnswerType::Noncommital, L"Cannot predict now" },
+        { AnswerType::Noncommital, L"Concentrate and ask again" },
+        { AnswerType::Negative, L"Don't count on it" },
+        { AnswerType::Negative, L"My reply is no" },
+        { AnswerType::Negative, L"My sources say no" },
+        { AnswerType::Negative, L"Outlook not so good" },
+        { AnswerType::Negative, L"Very doubtful" },
     };
     
     std::wstring RetrieveQuestion();
