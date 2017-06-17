@@ -20,3 +20,6 @@ finally, ⌘+B to build, and then you can highlight `eightball` underneath the `
 
 #### Visual Studio
 Just build in `Release` mode, then copy the resulting `eightball.exe` from the `Release` folder to anywhere in your `%PATH%`.
+
+#### On the web
+The 8-Ball is now available on the web: [http://gbtw.us/eightball/](http://gbtw.us/eightball/).
