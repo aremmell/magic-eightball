@@ -85,17 +85,24 @@ namespace eightball
         return strm.str();
     }
 
-    void ProcessQuestion(const wstring& question, bool printQuestion /*= false*/)
+    void ProcessQuestion(const wstring& question, bool printQuestion /*= false*/,
+        bool noAscii /*= false*/)
     {
-        if (printQuestion)
-            wcout << endl << L"You asked: " << question << endl;
-        
-        wcout << endl << EightBallASCII(ComputeMagicAnswer(question)) << endl;
+        if (noAscii) {
+            wcout << ComputeMagicAnswer(question);
+        } else {
+            if (printQuestion)
+                wcout << endl << L"You asked: " << question << endl;
+            wcout << endl << EightBallASCII(ComputeMagicAnswer(question));
+        }
+
+        wcout << endl;
     }
     
-    void PrintUsage()
+    bool PrintUsage()
     {
-        wcout << "Usage:" << endl << L"eightball [-q <question>|--version]" << endl;
+        wcout << "Usage:" << endl << L"eightball [[--no-ascii] -q <question>|--version]" << endl;
+        return false;
     }
 
     void PrintBanner()

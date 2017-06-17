@@ -18,27 +18,29 @@ using namespace std;
 
 namespace eightball
 {
-    bool ProcessCommandLine(int argc, const char** argv)
+    //
+    // CommandLine : Public
+    //
+    bool CommandLine::ProcessCommandLine(int argc, const char** argv)
     {
         if (argc > 1) {
 
             for (int n = 1; n < argc; n++) {
-                if (0 == strcmp(argv[n], CommandLineArgQuestion)) {
-                    (argc <= n + 1)
-                        ? PrintUsage() : ProcessQuestion(UTF8ToWideString(argv[n + 1]), true);
-                    break;
-                } else if (0 == strcmp(argv[n], CommandLineArgVersion)) {
-                    PrintBanner();
-                    break;
+                if (0 == strcmp(argv[n], CommandLineArgVersion)) {
+                    PrintBanner(); break;
+                } else if (0 == strcmp(argv[n], CommandLineArgNoAscii)) {
+                    _noAscii = true;
+                } else if (0 == strcmp(argv[n], CommandLineArgQuestion)) {
+                    if (argc <= n + 1)
+                        return PrintUsage();
+                    _question = UTF8ToWideString(argv[++n]);
                 } else {
                     wcout << L"Unknown argument: " << argv[n] << endl;
-                    PrintUsage();
+                    return PrintUsage();
                 }
             }
-
-            return true;
         }
 
-        return false;
+        return true;
     }
 }; // !namespace eightball

@@ -11,14 +11,29 @@
 #ifndef EIGHTBALL_CMDLINE_H
 #define EIGHTBALL_CMDLINE_H
 
+#include <string>
+
 namespace eightball
 {
     // Command-line constants
     static const char* CommandLineArgQuestion    = "-q";
     static const char* CommandLineArgVersion     = "--version";
+    static const char* CommandLineArgNoAscii     = "--no-ascii";
 
     // Implementation
-    bool ProcessCommandLine(int argc, const char** argv);
+    class CommandLine
+    {
+    public:
+        bool ProcessCommandLine(int argc, const char** argv);
+
+        std::wstring GetQuestion() { return _question; }
+        bool NoAscii() { return _noAscii; }
+    
+    private:
+        std::wstring _question;
+        bool _noAscii = false;
+    };
+    
 }; // !namespace eightball
 
 #endif // !EIGHTBALL_CMDLINE_H

@@ -16,9 +16,17 @@ using namespace std;
 using namespace eightball;
 
 int main(int argc, const char** argv) {
+    CommandLine cmdLine;
+    if (!cmdLine.ProcessCommandLine(argc, argv))
+        return 1;
 
-    if (!ProcessCommandLine(argc, argv)) {
-        do {
+    wstring question = cmdLine.GetQuestion();
+    bool noAscii = cmdLine.NoAscii();
+
+    if (!question.empty()) {
+        ProcessQuestion(question, true, noAscii);
+    } else {
+        do { // No question from command-line; get input from stdin.
             wcout << L"What is your question? ";
             wstring question = RetrieveQuestion();
         
@@ -34,7 +42,7 @@ int main(int argc, const char** argv) {
                 break;
             }
         
-            ProcessQuestion(question);
+            ProcessQuestion(question, false, noAscii);
         } while (true);
     }
     
