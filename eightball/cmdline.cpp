@@ -24,8 +24,8 @@ namespace eightball
 
             for (int n = 1; n < argc; n++) {
                 if (0 == strcmp(argv[n], CommandLineArgQuestion)) {
-                    (argc <= n + 1) ? PrintUsage() :
-                        ProcessQuestion(UTF8ToWideString(argv[n + 1]), true);
+                    (argc <= n + 1)
+                        ? PrintUsage() : ProcessQuestion(UTF8ToWideString(argv[n + 1]), true);
                     break;
                 } else if (0 == strcmp(argv[n], CommandLineArgVersion)) {
                     PrintBanner();
@@ -33,7 +33,6 @@ namespace eightball
                 } else {
                     wcout << L"Unknown argument: " << argv[n] << endl;
                     PrintUsage();
-                    break;
                 }
             }
 
