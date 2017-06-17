@@ -32,5 +32,8 @@
     <ClInclude Include="cmdline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="convert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

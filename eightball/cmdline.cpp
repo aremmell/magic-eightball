@@ -10,6 +10,7 @@
 
 #include "cmdline.h"
 #include "eightball.h"
+#include "convert.h"
 #include <iostream>
 #include <cwchar>
 
@@ -17,19 +18,16 @@ using namespace std;
 
 namespace eightball
 {
-    bool ProcessCommandLine(int argc, const wchar_t** argv)
+    bool ProcessCommandLine(int argc, const char** argv)
     {
         if (argc > 1) {
 
             for (int n = 1; n < argc; n++) {
-                if (0 == wcscmp(argv[n], CommandLineArgQuestion)) {
-                    if (argc <= n + 1) {
-                        PrintUsage();
-                    } else {
-                        ProcessQuestion(argv[n + 1], true);
-                    }
+                if (0 == strcmp(argv[n], CommandLineArgQuestion)) {
+                    (argc <= n + 1) ? PrintUsage() :
+                        ProcessQuestion(UTF8ToWideString(argv[n + 1]), true);
                     break;
-                } else if (0 == wcscmp(argv[n], CommandLineArgVersion)) {
+                } else if (0 == strcmp(argv[n], CommandLineArgVersion)) {
                     PrintBanner();
                     break;
                 } else {

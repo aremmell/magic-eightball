@@ -14,11 +14,11 @@
 namespace eightball
 {
     // Command-line constants
-    static const wchar_t* CommandLineArgQuestion    = L"-q";
-    static const wchar_t* CommandLineArgVersion     = L"--version";
+    static const char* CommandLineArgQuestion    = "-q";
+    static const char* CommandLineArgVersion     = "--version";
 
     // Implementation
-    bool ProcessCommandLine(int argc, const wchar_t** argv);
+    bool ProcessCommandLine(int argc, const char** argv);
 }; // !namespace eightball
 
 #endif // !EIGHTBALL_CMDLINE_H

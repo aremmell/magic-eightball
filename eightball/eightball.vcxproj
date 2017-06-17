@@ -305,6 +305,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cmdline.h" />
+    <ClInclude Include="convert.h" />
     <ClInclude Include="eightball.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

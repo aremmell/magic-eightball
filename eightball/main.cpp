@@ -15,7 +15,7 @@
 using namespace std;
 using namespace eightball;
 
-int wmain(int argc, const wchar_t** argv) {
+int main(int argc, const char** argv) {
 
     if (!ProcessCommandLine(argc, argv)) {
         do {

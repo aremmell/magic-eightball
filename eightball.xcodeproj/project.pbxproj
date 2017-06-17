@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		940D0B1E1EF42FEC00EE4C88 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 940D0B1A1EF42FEC00EE4C88 /* main.cpp */; };
 		940D0B1F1EF42FEC00EE4C88 /* eightball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 940D0B1B1EF42FEC00EE4C88 /* eightball.cpp */; };
+		94D84F511EF5AE0700FE7C72 /* cmdline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D84F4F1EF5AE0700FE7C72 /* cmdline.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +30,8 @@
 		940D0B1C1EF42FEC00EE4C88 /* crc32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc32.h; sourceTree = "<group>"; };
 		940D0B1D1EF42FEC00EE4C88 /* eightball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eightball.h; sourceTree = "<group>"; };
 		94C72BF51EF42F8B00D99157 /* eightball */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = eightball; sourceTree = BUILT_PRODUCTS_DIR; };
+		94D84F4F1EF5AE0700FE7C72 /* cmdline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmdline.cpp; sourceTree = "<group>"; };
+		94D84F501EF5AE0700FE7C72 /* cmdline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmdline.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +64,8 @@
 		94C72BF71EF42F8B00D99157 /* eightball */ = {
 			isa = PBXGroup;
 			children = (
+				94D84F4F1EF5AE0700FE7C72 /* cmdline.cpp */,
+				94D84F501EF5AE0700FE7C72 /* cmdline.h */,
 				940D0B1A1EF42FEC00EE4C88 /* main.cpp */,
 				940D0B1B1EF42FEC00EE4C88 /* eightball.cpp */,
 				940D0B1C1EF42FEC00EE4C88 /* crc32.h */,
@@ -129,6 +134,7 @@
 			files = (
 				940D0B1F1EF42FEC00EE4C88 /* eightball.cpp in Sources */,
 				940D0B1E1EF42FEC00EE4C88 /* main.cpp in Sources */,
+				94D84F511EF5AE0700FE7C72 /* cmdline.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
