@@ -8,32 +8,35 @@
 // and they retain all intellecutal property rights to the Magic 8-Ball.
 //
 
-#include <iostream>
 #include "eightball.h"
+#include "cmdline.h"
+#include <iostream>
 
 using namespace std;
 using namespace eightball;
 
-int main(int argc, const char * argv[]) {
-    
-    do {
-        wcout << L"What is your question? ";
-        wstring question = RetrieveQuestion();
+int wmain(int argc, const wchar_t** argv) {
+
+    if (!ProcessCommandLine(argc, argv)) {
+        do {
+            wcout << L"What is your question? ";
+            wstring question = RetrieveQuestion();
         
-        switch (question.length()) {
-            case 0: {
-                continue;
+            switch (question.length()) {
+                case 0: {
+                    continue;
+                }
+                break;
+                case 1: {
+                    if (tolower(question.at(0)) == 'q')
+                        return 0;
+                }
+                break;
             }
-            break;
-            case 1: {
-                if (tolower(question.at(0)) == 'q')
-                    return 0;
-            }
-            break;
-        }
         
-        wcout << endl << EightBallASCII(ComputeMagicAnswer(question)) << endl;
-    } while (true);
+            ProcessQuestion(question);
+        } while (true);
+    }
     
     return 0;
 }

@@ -21,6 +21,8 @@
 using namespace std;
 using namespace std::chrono;
 
+const float EIGHTBALL_VERSION = 1.1f;
+
 namespace eightball
 {
     wstring RetrieveQuestion()
@@ -82,10 +84,22 @@ namespace eightball
 
         return strm.str();
     }
-    
-    int PrintUsage()
+
+    void ProcessQuestion(const wstring& question, bool printQuestion /*= false*/)
     {
-        // TODO: If command-line arguments are added, implement this.
-        return 1;
+        if (printQuestion)
+            wcout << endl << L"You asked: " << question << endl;
+        
+        wcout << endl << EightBallASCII(ComputeMagicAnswer(question)) << endl;
+    }
+    
+    void PrintUsage()
+    {
+        wcout << "Usage:" << endl << L"eightball [-q <question>|--version]" << endl;
+    }
+
+    void PrintBanner()
+    {
+        wcout << "eightball v" << EIGHTBALL_VERSION << endl;
     }
 }; // !namespace eightball

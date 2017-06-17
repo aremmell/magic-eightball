@@ -21,9 +21,15 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cmdline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eightball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cmdline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

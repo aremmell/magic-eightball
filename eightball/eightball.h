@@ -55,7 +55,9 @@ namespace eightball
     std::wstring RetrieveQuestion();
     std::wstring ComputeMagicAnswer(const std::wstring& question);
     std::wstring EightBallASCII(const std::wstring& answer);
-    int PrintUsage();
+    void ProcessQuestion(const std::wstring& question, bool printQuestion = false);
+    void PrintUsage();
+    void PrintBanner();
 
 }; // !namespace eightball
 
