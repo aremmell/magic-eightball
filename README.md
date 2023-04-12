@@ -1,7 +1,6 @@
 # eightball
-You remember the Magic 8-Ball 🎱, right? Well this is like that, but rendered in pixels.
 
-If you're nostalgic like me, or just bored, the 8-ball command-line utility is a great way to supercharge your nerdiness.
+If you're nostalgic like me, like to believe in predestination, or are just a huge nerd, I think you'll enjoy this tool.
 
 ## Compiling
 
