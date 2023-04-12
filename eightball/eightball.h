@@ -1,12 +1,15 @@
-//
-// The Magic 8-ball
-//
-// Created by Ryan Lederman <lederman@gmail.com> on 14 June 2017
-//
-// License: MIT
-// Original Copyright (C) Mattel Inc. This program is not affiliated with Mattel Inc.,
-// and they retain all intellecutal property rights to the Magic 8-Ball.
-//
+/*
+ * eightball.h:
+ *
+ * This file is part of the Magic Eightball project.
+ *
+ * Author: Ryan M. Lederman <lederman@gmail.com>
+ * GitHub: https://github.com/aremmell/magic-eightball/
+ * Play online: https://rml.dev/magic-eightball/
+ *
+ * Please read the LICENSE file if you intend to modify
+ * or redistribute the source code contained herein.
+ */
 
 #ifndef EIGHTBALL_H
 #define EIGHTBALL_H
