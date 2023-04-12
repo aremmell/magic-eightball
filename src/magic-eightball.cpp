@@ -11,8 +11,7 @@
  * or redistribute the source code contained herein.
  */
 
-#include "eightball.h"
-#include "crc32.h"
+#include "magic-eightball.h"
 
 #include <iostream>
 #include <sstream>
@@ -24,7 +23,7 @@
 using namespace std;
 using namespace std::chrono;
 
-const float EIGHTBALL_VERSION = 1.1f;
+const float EIGHTBALL_VERSION = 1.2f;
 
 namespace magic_eightball
 {
