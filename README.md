@@ -1,24 +1,19 @@
-# eightball
+# magic-eightball
 
-If you're nostalgic like me, like to believe in predestination, or are just a huge nerd, I think you'll enjoy this tool.
+If you're nostalgic like me, believe in fate, or are just a nerd (*read: not dork; big difference*), I think you'll enjoy the *magic eightball*.
 
-## Compiling
+I find it particularly useful & funny to ask if you should or shouldn't do some thing that you can't make your mind up about.
 
-At this time I have added both a Visual Studio 2017 and Xcode project for building Magic 8-Ball. You will need a C++11-compliant compiler to build it with anything crappier than those tools.
+When you're in that situation along with a friend or family member, it's even more enjoyable. One of you can ask the magic eightball, and be pleased or disappointed–depending on the answer.
 
-#### Xcode
-In order to build Magic 8-Ball and make it avaialble in your account on macOS, you will need to edit the `Run` profile:
+## Tribute
 
-![Editing the run profile](http://wyatt.computer/pub/eightball-1.png)
+Since I cannot actually manufacture a plastic ball filled with liquid, I have at least ensured that the set of answers that are possible for any given question are the original set from the toy.
 
-then change the configuration to `Release`:
+## Basic usage
 
-![Changing to release](http://wyatt.computer/pub/eightball-2.png)
+Lorem ipsum foo bar
 
-finally, ⌘+B to build, and then you can highlight `eightball` underneath the `Products` node, which will show its full path on the right side of the IDE. Hit the -> icon and that'll open Finder. Then, copy it to `/usr/local/bin` and you're good to go.
+## Technical jargon
 
-#### Visual Studio
-Just build in `Release` mode, then copy the resulting `eightball.exe` from the `Release` folder to anywhere in your `%PATH%`.
-
-#### On the web
-The 8-Ball is now available on the web: [http://gbtw.us/eightball/](http://gbtw.us/eightball/).
+It uses the STL's [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twister) implementation (`mt19937`), and seeded with the [CRC32](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) checksum of the question input text.
