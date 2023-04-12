@@ -12,14 +12,14 @@
  */
 
 #include "cmdline.h"
-#include "eightball.h"
-#include "convert.h"
+#include "magic-eightball.h"
+#include "util.h"
 #include <iostream>
 #include <cwchar>
 
 using namespace std;
 
-namespace eightball
+namespace magic_eightball
 {
     //
     // CommandLine : Public
@@ -46,4 +46,4 @@ namespace eightball
 
         return true;
     }
-}; // !namespace eightball
+}; // !namespace magic_eightball

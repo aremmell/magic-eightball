@@ -11,12 +11,12 @@
  * or redistribute the source code contained herein.
  */
 
-#ifndef EIGHTBALL_H
-#define EIGHTBALL_H
+#ifndef MAGIC_EIGHTBALL_H
+#define MAGIC_EIGHTBALL_H
 
 #include <string>
 
-namespace eightball
+namespace magic_eightball
 {
     enum class AnswerType : uint8_t
     {
@@ -62,8 +62,6 @@ namespace eightball
     bool PrintUsage();
     void PrintBanner();
 
-}; // !namespace eightball
+}; // !namespace magic_eightball
 
-
-#endif // !EIGHTBALL_H
-
+#endif // !MAGIC_EIGHTBALL_H

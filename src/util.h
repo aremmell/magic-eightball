@@ -1,5 +1,5 @@
 /*
- * convert.h:
+ * util.h:
  *
  * This file is part of the Magic Eightball project.
  *
@@ -11,15 +11,22 @@
  * or redistribute the source code contained herein.
  */
 
+#ifndef MAGIC_EIGHTBALL_UTIL_H
+#define MAGIC_EIGHTBALL_UTIL_H
+
 #include <string>
+#include <stdint.h>
+#include <stddef.h>
 #include <cstdlib>
 #include <cstring>
 
-namespace eightball
+using namespace std;
+
+namespace magic_eightball
 {
-    inline std::wstring UTF8ToWideString(const char* utf8)
+    wstring UTF8ToWideString(const char* utf8)
     {
-        std::wstring retval;
+        wstring retval;
 
         if (nullptr != utf8 && '\0' != *utf8) {
             size_t len = strlen(utf8) + 1;
@@ -37,4 +44,20 @@ namespace eightball
 
         return retval;
     }
-}; // !namespace eightball
+
+    uint32_t crc32c(uint32_t crc, const unsigned char *buf, size_t len)
+    {
+        constexpr uint32_t POLY = 0xedb88320U;
+        int k = 0;
+
+        crc = ~crc;
+        while (len--) {
+            crc ^= *buf++;
+            for (k = 0; k < 8; k++)
+                crc = crc & 1 ? (crc >> 1) ^ POLY : crc >> 1;
+        }
+        return ~crc;
+    }    
+}; // !namespace magic_eightball
+
+#endif // !MAGIC_EIGHTBALL_UTIL_H

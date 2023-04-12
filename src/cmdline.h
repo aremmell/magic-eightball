@@ -11,17 +11,17 @@
  * or redistribute the source code contained herein.
  */
 
-#ifndef EIGHTBALL_CMDLINE_H
-#define EIGHTBALL_CMDLINE_H
+#ifndef MAGIC_EIGHTBALL_CMDLINE_H
+#define MAGIC_EIGHTBALL_CMDLINE_H
 
 #include <string>
 
-namespace eightball
+namespace magic_eightball
 {
     // Command-line constants
-    static const char* CommandLineArgQuestion    = "-q";
-    static const char* CommandLineArgVersion     = "--version";
-    static const char* CommandLineArgNoAscii     = "--no-ascii";
+    constexpr char* CommandLineArgQuestion = "-q";
+    constexpr char* CommandLineArgVersion  = "--version";
+    constexpr char* CommandLineArgNoAscii  = "--no-ascii";
 
     // Implementation
     class CommandLine
@@ -37,6 +37,6 @@ namespace eightball
         bool _noAscii = false;
     };
     
-}; // !namespace eightball
+}; // !namespace magic_eightball
 
-#endif // !EIGHTBALL_CMDLINE_H
+#endif // !MAGIC_EIGHTBALL_CMDLINE_H

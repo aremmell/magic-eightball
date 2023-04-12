@@ -11,12 +11,12 @@
  * or redistribute the source code contained herein.
  */
 
-#include "eightball.h"
+#include "magic-eightball.h"
 #include "cmdline.h"
 #include <iostream>
 
 using namespace std;
-using namespace eightball;
+using namespace magic_eightball;
 
 int main(int argc, const char** argv) {
     CommandLine cmdLine;

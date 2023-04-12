@@ -26,7 +26,7 @@ using namespace std::chrono;
 
 const float EIGHTBALL_VERSION = 1.1f;
 
-namespace eightball
+namespace magic_eightball
 {
     wstring RetrieveQuestion()
     {
@@ -112,4 +112,4 @@ namespace eightball
     {
         wcout << "eightball v" << EIGHTBALL_VERSION << endl;
     }
-}; // !namespace eightball
+}; // !namespace magic_eightball
