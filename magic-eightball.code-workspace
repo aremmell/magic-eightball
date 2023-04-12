@@ -3,5 +3,17 @@
         {
             "path": "."
         }
-    ]
+    ],
+    "settings": {
+        /* CMake Tools */
+        "cmake.sourceDirectory": "${workspaceFolder}/src",
+        "cmake.useCMakePresets": "auto",
+        "cmake.clearOutputBeforeBuild": false,
+        "cmake.skipConfigureIfCachePresent": true,
+        "cmake.allowCommentsInPresetsFile": true,        
+        "cmake.loggingLevel": "warning",
+        "cmake.revealLog": "focus",
+        "cmake.configureOnOpen": false,
+        "cmake.configureOnEdit": true,
+    }
 }
