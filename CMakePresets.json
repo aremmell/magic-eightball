@@ -1,0 +1,50 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 26,
+        "patch": 3
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "Default configure preset",
+            "description": "Selecs Ninja generator, sets build and install directories",
+            "generator": "Ninja",
+            "binaryDir": "$env{fileDir}/$env{presetName}",
+            "cmakeExecutable": "/opt/homebrew/bin/cmake",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_INSTALL_PREFIX": "$env{fileDir}/install/$env{presetName}"
+            },
+            "toolset": {
+                "strategy": "external"
+            },
+            "environment": {
+                "PATH": "$env{cmakeExecutable}:$penv{PATH}"
+            },
+            "warnings": {
+                "dev": true,
+                "deprecated": true
+            },
+            "debug": {
+                "output": true
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "default",
+            "configurePreset": "default",
+            "jobs": 3, /* TODO: count cores and use 1/3-1/2 of them */
+            "verbose": true
+        }
+    ],
+    "vendor": {
+        "com.microsoft.vscode": {
+            "placeholder": true
+        }
+    }
+}
