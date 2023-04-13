@@ -1,5 +1,46 @@
 {
 	"version": "2.0.0",
 	"tasks": [
+		{
+			"type": "cmake",
+			"label": "CMake: configure",
+			"command": "configure",
+			"preset": "${command:cmake.activeConfigurePresetName}",
+			"problemMatcher": [],
+			"detail": "CMake configure task",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"dependsOn": []
+		},
+		{
+			"type": "cmake",
+			"label": "CMake: build",
+			"command": "build",
+			"preset": "${command:cmake.activeBuildPresetName}",
+			"problemMatcher": [],
+			"detail": "CMake build task",
+			"group": {
+				"kind": "build"
+			},			
+			"dependsOn": [
+				"CMake: configure"
+			]
+		},
+		{
+			"type": "cmake",
+			"label": "CMake: install",
+			"command": "install",
+			"preset": "${command:cmake.activeBuildPresetName}",
+			"problemMatcher": [],
+			"detail": "CMake install task",
+			"group": {
+				"kind": "build"
+			},			
+			"dependsOn": [
+				"CMake: build"
+			]
+		}
 	]
 }
