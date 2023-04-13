@@ -1,5 +1,4 @@
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_INCLUDE_DIR})
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
 
-target_include_directories(magic-eightball PUBLIC ${CMAKE_INCLUDE_DIR})
-target_compile_features(magic-eightball PUBLIC cxx_std_14)
-
-add_executable(magic-eightball ${SOURCE_FILES})
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
