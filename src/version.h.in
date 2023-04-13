@@ -1,0 +1,2 @@
+constexpr char* MAGIC_MAGIC_EIGHTBALL_VERSION = "1.2.0";
+

@@ -15,10 +15,10 @@
 #define MAGIC_EIGHTBALL_UTIL_H
 
 #include <string>
-#include <stdint.h>
-#include <stddef.h>
+#include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <stddef.h>
 
 using namespace std;
 

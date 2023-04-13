@@ -6,7 +6,6 @@
     ],
     "settings": {
         /* CMake Tools */
-        "cmake.sourceDirectory": "${workspaceFolder}/src",
         "cmake.useCMakePresets": "auto",
         "cmake.clearOutputBeforeBuild": false,
         "cmake.skipConfigureIfCachePresent": true,

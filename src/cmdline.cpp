@@ -14,8 +14,8 @@
 #include "cmdline.h"
 #include "magic-eightball.h"
 #include "util.h"
+
 #include <iostream>
-#include <cwchar>
 
 using namespace std;
 

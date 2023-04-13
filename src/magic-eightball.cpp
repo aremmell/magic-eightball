@@ -1,5 +1,5 @@
 ﻿/*
- * eightball.cpp:
+ *MAGIC_EIGHTBALL_NAME.cpp:
  *
  * This file is part of the Magic Eightball project.
  *
@@ -12,18 +12,16 @@
  */
 
 #include "magic-eightball.h"
+#include "util.h"
 
 #include <iostream>
 #include <sstream>
-#include <cstring>
 #include <memory>
 #include <chrono>
 #include <random>
 
 using namespace std;
 using namespace std::chrono;
-
-const float EIGHTBALL_VERSION = 1.2f;
 
 namespace magic_eightball
 {
@@ -103,12 +101,12 @@ namespace magic_eightball
     
     bool PrintUsage()
     {
-        wcout << "Usage:" << endl << L"eightball [[--no-ascii] -q <question>|--version]" << endl;
+        wcout << "Usage:" << endl << MAGIC_EIGHTBALL_NAME << L" [[--no-ascii] -q <question>|--version]" << endl;
         return false;
     }
 
     void PrintBanner()
     {
-        wcout << "eightball v" << EIGHTBALL_VERSION << endl;
+        wcout << "magic-eightball v" << MAGIC_EIGHTBALL_VERSION << endl;
     }
 }; // !namespace magic_eightball

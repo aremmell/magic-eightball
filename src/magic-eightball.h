@@ -1,5 +1,5 @@
 /*
- * eightball.h:
+ * magic-eightball.h:
  *
  * This file is part of the Magic Eightball project.
  *
@@ -15,6 +15,8 @@
 #define MAGIC_EIGHTBALL_H
 
 #include <string>
+#include <cstdint>
+#include <cwchar>
 
 namespace magic_eightball
 {
