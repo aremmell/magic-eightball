@@ -3,16 +3,5 @@
         {
             "path": "."
         }
-    ],
-    "settings": {
-        /* CMake Tools */
-        "cmake.useCMakePresets": "auto",
-        "cmake.clearOutputBeforeBuild": true,
-        "cmake.skipConfigureIfCachePresent": false,
-        "cmake.allowCommentsInPresetsFile": true,        
-        "cmake.loggingLevel": "info",
-        "cmake.revealLog": "focus",
-        "cmake.configureOnOpen": false,
-        "cmake.configureOnEdit": false
-    }
+    ]
 }
