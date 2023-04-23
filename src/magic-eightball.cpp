@@ -108,6 +108,7 @@ namespace magic_eightball
 
     void PrintBanner()
     {
-        wcout << "magic-eightball v" << VERSION_MAJOR << "." << VERSION_MINOR << VERSION_PATCH << " (" << GIT_COMMIT_HASH << ")" << endl;
+        wcout << "magic-eightball v" << VERSION_MAJOR << "." << VERSION_MINOR << "." 
+              << VERSION_PATCH << " (" << GIT_COMMIT_HASH << ")" << endl;
     }
 }; // !namespace magic_eightball
