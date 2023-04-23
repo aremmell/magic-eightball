@@ -12,6 +12,7 @@
  */
 
 #include "magic-eightball.h"
+#include "version.h"
 #include "util.h"
 
 #include <iostream>
@@ -101,12 +102,12 @@ namespace magic_eightball
     
     bool PrintUsage()
     {
-        wcout << "Usage:" << endl << MAGIC_EIGHTBALL_NAME << L" [[--no-ascii] -q <question>|--version]" << endl;
+        wcout << "Usage:" << endl << PROGRAM_NAME << L" [[--no-ascii] -q <question>|--version]" << endl;
         return false;
     }
 
     void PrintBanner()
     {
-        wcout << "magic-eightball v" << MAGIC_EIGHTBALL_VERSION << endl;
+        wcout << "magic-eightball v" << VERSION_MAJOR << "." << VERSION_MINOR << VERSION_PATCH << " (" << GIT_COMMIT_HASH << ")" << endl;
     }
 }; // !namespace magic_eightball

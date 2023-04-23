@@ -24,7 +24,7 @@ using namespace std;
 
 namespace magic_eightball
 {
-    wstring UTF8ToWideString(const char* utf8)
+    inline wstring UTF8ToWideString(const char* utf8)
     {
         wstring retval;
 
@@ -45,7 +45,7 @@ namespace magic_eightball
         return retval;
     }
 
-    uint32_t crc32c(uint32_t crc, const unsigned char *buf, size_t len)
+   inline  uint32_t crc32c(uint32_t crc, const unsigned char *buf, size_t len)
     {
         constexpr uint32_t POLY = 0xedb88320U;
         int k = 0;

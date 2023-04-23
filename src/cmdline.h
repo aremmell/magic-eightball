@@ -19,9 +19,9 @@
 namespace magic_eightball
 {
     // Command-line constants
-    constexpr char* CommandLineArgQuestion = "-q";
-    constexpr char* CommandLineArgVersion  = "--version";
-    constexpr char* CommandLineArgNoAscii  = "--no-ascii";
+    constexpr const char* CommandLineArgQuestion = "-q";
+    constexpr const char* CommandLineArgVersion  = "--version";
+    constexpr const char* CommandLineArgNoAscii  = "--no-ascii";
 
     // Implementation
     class CommandLine

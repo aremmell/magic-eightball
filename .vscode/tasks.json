@@ -7,26 +7,27 @@
 			"command": "configure",
 			"preset": "${command:cmake.activeConfigurePresetName}",
 			"problemMatcher": [],
-			"detail": "CMake configure task",
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"dependsOn": []
+			"detail": "CMake template configure task"
 		},
 		{
 			"type": "cmake",
 			"label": "CMake: build",
 			"command": "build",
+			"targets": [
+				"all"
+			],
+			"preset": "${command:cmake.activeBuildPresetName}",
+			"group": "build",
+			"problemMatcher": [],
+			"detail": "CMake template build task"
+		},
+		{
+			"type": "cmake",
+			"label": "CMake: clean",
+			"command": "clean",
 			"preset": "${command:cmake.activeBuildPresetName}",
 			"problemMatcher": [],
-			"detail": "CMake build task",
-			"group": {
-				"kind": "build"
-			},			
-			"dependsOn": [
-				"CMake: configure"
-			]
+			"detail": "CMake template clean task"
 		},
 		{
 			"type": "cmake",
@@ -34,13 +35,7 @@
 			"command": "install",
 			"preset": "${command:cmake.activeBuildPresetName}",
 			"problemMatcher": [],
-			"detail": "CMake install task",
-			"group": {
-				"kind": "build"
-			},			
-			"dependsOn": [
-				"CMake: build"
-			]
+			"detail": "CMake template install task"
 		}
 	]
 }

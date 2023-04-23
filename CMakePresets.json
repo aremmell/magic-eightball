@@ -8,22 +8,14 @@
     "configurePresets": [
         {
             "name": "default",
-            "displayName": "Default configure",
-            "description": "Generator: Ninja, sets binary and install dirs",
+            "displayName": "Configure: default",
+            "description": "Generator: Ninja",
             "generator": "Ninja",
-            "binaryDir": "$env{CMAKE_BINARY_DIR}",
-            "installDir": "$env{CMAKE_INSTALL_DIR}",
-            "cmakeExecutable": "$env{CMAKE_EXECUTABLE}",
             "cacheVariables": {
-                "CMAKE_SOURCE_DIR": "${sourceDir}/src",
-                "CMAKE_INCLUDE_DIR": "${sourceDir}/src",
-                "CMAKE_BINARY_DIR": "${sourceDir}/build/cmake",
-                "CMAKE_INSTALL_DIR": "${sourceDir}/build/cmake/install",
-                "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_C_COMPILER": "clang",
-                "CMAKE_CXX_COMPILER": "clang++",
-                "CMAKE_EXECUTABLE": "/opt/homebrew/bin/cmake"
-            },
+                "CMAKE_INSTALL_PREFIX": "build/install"
+            },            
+            "binaryDir": "build",
+            "installDir": "build/install",
             "toolset": {
                 "strategy": "external"
             },
@@ -35,27 +27,48 @@
                 "systemVars": true
             },
             "debug": {
-                "output": true
+                "output": false
             }
-        }
+        },
+        {
+            "name": "debug",
+            "displayName": "Configure: debug",
+            "inherits": "default",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Configure: release",
+            "inherits": "default",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }        
     ],
     "buildPresets": [
         {
             "name": "default",
-            "configurePreset": "default",
+            "displayName": "Build: default",
+            "configurePreset": "debug",
+            "cleanFirst": true,
             "jobs": 3,
-            "verbose": false
-        }
-    ],
-    "testPresets": [
+            "verbose": true
+        },
         {
-            "name": "default",
-            "configurePreset": "default"
+            "name": "debug",
+            "displayName": "Build: debug",
+            "description": "Builds magic-eightball with debugging symbols.",
+            "configurePreset": "debug",            
+            "inherits": "default"
+        },
+        {
+            "name": "release",
+            "displayName": "Build: release",
+            "description": "Builds magic-eightball for public use.",
+            "configurePreset": "release",
+            "inherits": "default"
         }
-    ],
-    "vendor": {
-        "com.microsoft.vscode": {
-            "placeholder": true
-        }
-    }
+    ]
 }

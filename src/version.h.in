@@ -1,2 +1,25 @@
-constexpr char* MAGIC_MAGIC_EIGHTBALL_VERSION = "1.2.0";
+/*
+ * version.h:
+ *
+ * This file is part of the Magic Eightball project.
+ *
+ * Author: Ryan M. Lederman <lederman@gmail.com>
+ * GitHub: https://github.com/aremmell/magic-eightball/
+ * Play online: https://rml.dev/magic-eightball/
+ *
+ * Please read the LICENSE file if you intend to modify
+ * or redistribute the source code contained herein.
+ */
 
+#include <cstdint>
+#include <cwchar>
+
+namespace magic_eightball
+{
+    constexpr const wchar_t* PROGRAM_NAME    = L"magic-eightball";
+    constexpr const wchar_t* GIT_COMMIT_HASH = L"${GIT_COMMIT_HASH}";    
+    constexpr uint8_t VERSION_MAJOR          = ${PROJECT_VERSION_MAJOR};
+    constexpr uint8_t VERSION_MINOR          = ${PROJECT_VERSION_MINOR};
+    constexpr uint8_t VERSION_PATCH          = ${PROJECT_VERSION_PATCH};
+
+}; // !namespace magic_eightball
