@@ -17,3 +17,7 @@ Lorem ipsum foo bar
 ## Technical jargon
 
 It uses the STL's [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twister) implementation (`mt19937`), and seeded with the [CRC32](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) checksum of the question input text.
+
+### TODO
+
+-   [ ]  There should be a platform-specific `install prefix`, but an obvious way is not presenting itself.

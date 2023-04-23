@@ -13,7 +13,7 @@ cmake_policy(SET CMP0066 NEW) # CMAKE_<LANG>_FLAGS_<BUILDTYPE>
 # toolchain-related
 set(CXX_FLAGS_DEBUG -g -O0 -DDEBUG)
 set(CXX_FLAGS_RELEASE -O3 -DNDEBUG)
-set(CXX_COMPILER clang++)
+#set(CMAKE_CXX_COMPILER /Library/Developer/CommandLineTools/usr/bin/clang++)
 
 # define the project
 project(
@@ -58,3 +58,8 @@ target_compile_features(
     cxx_std_14
 )
 
+install(
+    PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
+    TYPE BIN
+    CONFIGURATIONS Release
+)
