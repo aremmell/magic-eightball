@@ -28,13 +28,17 @@
         var inputs = document.getElementsByClassName('form-control');
         for (let i of inputs) {
             i.addEventListener('blur', function() {
-                if (i.checkValidity()) {
+                let validity = i.checkValidity();
+
+                if (validity) {
                     i.classList.remove('is-invalid');
                     i.classList.add('is-valid');
                 } else {
                     i.classList.remove('is-valid');
                     i.classList.add('is-invalid');
                 }
+
+                console.log(`got 'blur' update for ${i}; input valid: ${validity}`);
             });
         }
     });

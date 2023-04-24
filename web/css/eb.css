@@ -1,29 +1,27 @@
-html {
-}
-
 body {
-    font-family: 'Avenir', Arial, Verdana, Tahoma;
-    background: black;
-    color: white;  
+    font-family: 'Montserrat', Arial, Verdana, Tahoma;
+    background: #0b0e13;
+    color:  #cccccc;  
     font-size: 1em;
     padding: 25px;
     margin-bottom: 45px;
 }
 
 a:link {
-    color: #104984;
+    color: indigo
+;
 }
 
 a:visited {
-    color: #5c00a2;
+    color: #4d0086;
 }
 
 a:hover {
-    color: #003de5;
+    color: #8200e8;
 }
 
 a:active {
-    color: white;
+    color: #cccccc;
 }
 
 #eb-header{
@@ -58,7 +56,6 @@ span.error_mode {
 
 #eb-form-container {
     margin-top: 2rem;
-    min-height: calc(38vh);
 }
 
 #eb-input-text {
@@ -66,7 +63,7 @@ span.error_mode {
     border-bottom-right-radius: 0;
     border-right-width: 0;
     background-color: #e0e0e0;
-    color: #79848d;
+    color: #85939d;
 }
 
 #eb-question-group {
@@ -74,17 +71,17 @@ span.error_mode {
 }
 
 #eb-input-button {
-    background-color: #0a2746;
+    background-color: indigo;
     color: #e0e0e0;
     border-left-width: 0;
     border-top-right-radius: 0.3rem;
     border-bottom-right-radius: 0.3rem;
-    border: 1px solid #104984;
+    border: 1px solid #9400ff;
 }
     #eb-input-button:hover {
-        background-color: #003de5 !important;     
+        background-color: #9400ff !important;     
         border-color: #e0e0e0 !important;   
-        color: white !important;
+        color: #e0e0e0 !important;
     }
 
 #eb-footer {
@@ -103,25 +100,12 @@ span.error_mode {
     }
 
 @font-face {
-    font-family: 'IBMSans';
-    src: url('../fonts/IBMPlexSans-Medium.ttf') format('truetype');
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-Medium.ttf') format('truetype');
 }
 
 @font-face {
-    font-family: 'Avenir';
-    src: url('../fonts/AvenirLTStd-Book.otf') format('truetype');
+    font-family: 'Montserrat';
+    font-style: italic;
+    src: url('../fonts/Montserrat-MediumItalic.ttf') format('truetype');
 }
-
-/*Seafarer
-    #014d6f Sea Paint #05486e
-    Mermaid Blues #08436b
-    Tardis Blue #0c3c65
-    Marine #0d335a
-    Naval Night #0a2746
-    The Count's Black #041727
-    Black Metal #010704
-    blue violet: #71f8c2
-    purple heart: #8200e8
-    purple indigo: #indigo
-    8-ball blue: #003de5
-    */

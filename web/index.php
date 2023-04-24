@@ -100,7 +100,7 @@ if (!empty($answer_pl)) {
         <div id="eb-previous-question">
             <?php if ($error_mode !== true) {
                 if (!empty($question)) {
-                    echo "<span class=\"prev-question-intro\">You asked: <span class=\"prev-question\">'$question'</span>";
+                    echo "<span class=\"prev-question-intro\">You asked:&nbsp;<span class=\"prev-question\">&#x2018;$question&#x2019;</span>";
                 }
             } else {
                 echo "<span class=\"error_mode\">$question</span>";
@@ -130,7 +130,7 @@ if (!empty($answer_pl)) {
                             Lookin' good.
                         </div>
                         <div class="invalid-feedback">
-                            You've got to ask a question in order to get an answer.
+                            Can't get an answer without a question...
                         </div>
                         <label class="sr-only" for="q">Type your question..."></label>
                     </div>
