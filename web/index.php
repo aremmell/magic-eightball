@@ -122,7 +122,7 @@ if (!empty($answer_pl)) {
             <div class="col col-6">
                 <form action="index.php" method="get" class="form-inline needs-validation" novalidate>
                     <div id="eb-question-group" class="input-group input-group-lg">
-                        <input type="text" class="form-control" id="eb-input-text" name="q" placeholder="Type your question..." autocomplete="off" required>
+                        <input type="text" class="form-control" id="eb-input-text" name="q" placeholder="Type your question..." autocomplete="off" autofocus required>
                         <div class="input-group-append">
                             <button type="submit" id="eb-input-button" class="btn btn-outline-primary">go</button>
                         </div>
@@ -130,7 +130,7 @@ if (!empty($answer_pl)) {
                             Lookin' good.
                         </div>
                         <div class="invalid-feedback">
-                            You've got to enter a question to get an answer...
+                            You've got to ask a question in order to get an answer.
                         </div>
                         <label class="sr-only" for="q">Type your question..."></label>
                     </div>
