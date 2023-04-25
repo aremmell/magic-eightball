@@ -1,11 +1,11 @@
-<!doctype html>
-<html>
-
 <?php
+
+// Let's get some includes up in here.
+require 'locale.php';
+
 const github_url = "https://github.com/aremmell/magic-eightball";
 const cli_path   = "magic-eightball";
 const cli_args   = "--no-ascii -q ";
-const page_title = "Magic 8-Ball";
 
 $entire_pl = "";
 $question_pl = "";
@@ -48,8 +48,8 @@ $answer = decode_if_present_in_params($answer);
 if (!empty($answer) && empty($question)) {
     // We'll just display errors and ask them to try again.
     $error_mode = true;
-    $question = "Uh-oh. Looks like we've encountered a problem. Please try submitting another question.";
-    $answer = ""; 
+    $question = $locale->getstring(LOC_ERRMSG_NO_QUESTION);
+    $answer = "";
 }
 
 if ($question !== "") {
@@ -81,17 +81,23 @@ if (!empty($question_pl)) {
 if (!empty($answer_pl)) {
     $entire_pl .= "&a=$answer_pl";
 }
+
+printf("question='%s', answer='%s', error_mode=%s",
+    $question, $answer, $error_mode ? "true" : "false");
 ?>
 
+<!doctype html>
+<html lang="en">
+
 <head>
-    <title><?php echo page_title ?></title>
+    <title><?php echo LOC_MAGIC_EIGHTBALL ?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Ryan M. Lederman <lederman@gmail.com>">
     <link rel="icon" type="image/png" href="img/favicon.png">
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/form.validation.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/eb.css">
 </head>
 
@@ -100,57 +106,58 @@ if (!empty($answer_pl)) {
         <div id="eb-previous-question">
             <?php if ($error_mode !== true) {
                 if (!empty($question)) {
-                    echo "<span class=\"prev-question-intro\">You asked:&nbsp;<span class=\"prev-question\">&#x2018;$question&#x2019;</span>";
+                    $myvar = LOC_YOU_ASKED;
+                    echo "<span class=\"prev-question-intro\">$myvar<span class=\"prev-question\">&#x2018;$question&#x2019;</span>";
                 }
             } else {
                 echo "<span class=\"error_mode\">$question</span>";
             } ?>
-        </div>
-        <div id="eb-new-answer">
-            <?php if ($error_mode !== true) {
-                if (!empty($answer)) {
-                    echo "<span>8-Ball says: $answer</span>";
-                }
-            } else {
-                echo "<span class=\"error_mode\"></span>";
-            } ?>
-        </div>
-    </div>
-
-    <div id="eb-form-container" class="container">
-        <div class="row justify-content-center">
-            <div class="col col-6">
-                <form action="index.php" method="get" class="form-inline needs-validation" novalidate>
-                    <div id="eb-question-group" class="input-group input-group-lg">
-                        <input type="text" class="form-control" id="eb-input-text" name="q" placeholder="Type your question..." autocomplete="off" autofocus required>
-                        <div class="input-group-append">
-                            <button type="submit" id="eb-input-button" class="btn btn-outline-primary">go</button>
-                        </div>
-                        <div class="valid-feedback">
-                            Lookin' good.
-                        </div>
-                        <div class="invalid-feedback">
-                            Can't get an answer without a question...
-                        </div>
-                        <label class="sr-only" for="q">Type your question..."></label>
-                    </div>
-                </form>
+            <div id="eb-new-answer">
+                <?php if ($error_mode !== true) {
+                    if (!empty($answer)) {
+                        $tmpvar = LOC_ANSWER_PREFIX;
+                        echo "<span class=\"answer-intro\">$tmpvar<span class=\"answer-text\">$answer</span>";
+                    }
+                } else {
+                    echo "<span class=\"error_mode\"></span>";
+                } ?>
             </div>
         </div>
-    </div>
 
-    <div id="eb-footer">
-        <span class="footer-entry">
-            <a href="<?php echo github_url ?>" target="_blank">
-                <img class="footer-entry" src="img/github-mark.png" alt="GitHub logo" width="24" height="24">GitHub
-            </a>
-        </span>
-        <?php if (!$error_mode && !empty($entire_pl)) {
-            echo "<span class=\"footer-entry\">|</span><span><a href=\"/8b/$entire_pl\" target=\"_blank\">Permalink</a></span>";
-        } ?>
-    </div>
-    <script src="js/jquery.slim.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-</body>
+        <div id="eb-form-container" class="container">
+            <div class="row justify-content-center">
+                <div class="col col-6">
+                    <form action="index.php" method="get" class="form-inline needs-validation" novalidate>
+                        <div id="eb-question-group" class="input-group input-group-lg">
+                            <input type="text" class="form-control" id="eb-input-text" name="q" placeholder="<?php echo LOC_INPUT_PLACEHOLDER ?>" autocomplete="off" autofocus required>
+                            <div class="input-group-append">
+                                <button type="submit" id="eb-input-button" class="btn btn-outline-primary"><?php echo LOC_SUBMIT_BUTTON ?></button>
+                            </div>
+                            <div class="valid-feedback">
+                                <?php echo LOC_VALID_INPUT ?>
+                            </div>
+                            <div class="invalid-feedback">
+                                <?php echo LOC_INVALID_INPUT ?>
+                            </div>
+                            <label class="sr-only" for="q"><?php echo LOC_INPUT_PLACEHOLDER ?>"></label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
+        <div id="eb-footer">
+            <span class="footer-entry">
+                <a href="<?php echo github_url ?>" target="_blank">
+                    <img class="footer-entry" src="img/github-mark.png" alt="GitHub logo" width="24" height="24">GitHub
+                </a>
+            </span>
+            <?php if (!$error_mode && !empty($entire_pl)) {
+                echo "<span class=\"footer-entry\">|</span><span><a href=\"/8b/$entire_pl\" target=\"_blank\">Permalink</a></span>";
+            } ?>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </body>
 </html>
+

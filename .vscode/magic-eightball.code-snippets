@@ -1,6 +1,6 @@
 {
 	"insert c++ source header comment": {
-		"scope": "cpp, header",
+		"scope": "",
 		"prefix": "hdr",
 		"body": [
 			"/*",
