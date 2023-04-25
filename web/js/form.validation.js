@@ -1,10 +1,9 @@
 (function () {
     window.addEventListener('load', function () {
-        let forms = $(".needs-validation");
-        for (let f = 0; f < forms.length; f++) {
-            let e = $(forms[f]);
-            e.submit((evt) => {
-                if (forms[f].checkValidity() === false) {
+        var inputs = document.getElementsByClassName('form-control');
+       for (let i of inputs) {
+            i.addEventListener('blur', function () {
+                if (i.checkValidity() === false) {
                     evt.preventDefault();
                     evt.stopPropagation();
                     console.error("Form failed to validate!");
@@ -20,7 +19,7 @@
             });
         }
     });
-})();
+)();
 
 (function() {
     'use strict';

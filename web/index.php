@@ -2,7 +2,7 @@
 
 // Let's get some includes up in here.
 require 'locale.php';
-require 'util.php'
+require 'util.php';
 
 const github_url = "https://github.com/aremmell/magic-eightball";
 const cli_path   = "magic-eightball";
@@ -79,6 +79,7 @@ if (!empty($answer_pl)) {
 </head>
 
 <body>
+
     <div id="eb-header">
         <div id="eb-previous-question">
             <?php if ($error_mode !== true) {
@@ -133,8 +134,6 @@ if (!empty($answer_pl)) {
             echo "<span class=\"footer-entry\">|</span><span><a href=\"/8b/$entire_pl\" target=\"_blank\">Permalink</a></span>";
         } ?>
     </div>
-    <script src="js/jquery.slim.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
