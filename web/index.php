@@ -82,8 +82,6 @@ if (!empty($answer_pl)) {
     $entire_pl .= "&a=$answer_pl";
 }
 
-printf("question='%s', answer='%s', error_mode=%s",
-    $question, $answer, $error_mode ? "true" : "false");
 ?>
 
 <!doctype html>
@@ -95,7 +93,6 @@ printf("question='%s', answer='%s', error_mode=%s",
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Ryan M. Lederman <lederman@gmail.com>">
     <link rel="icon" type="image/png" href="img/favicon.png">
-    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/form.validation.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/eb.css">
@@ -125,7 +122,9 @@ printf("question='%s', answer='%s', error_mode=%s",
         </div>
 
         <div id="eb-form-container" class="container">
+
             <div class="row justify-content-center">
+
                 <div class="col col-6">
                     <form action="index.php" method="get" class="form-inline needs-validation" novalidate>
                         <div id="eb-question-group" class="input-group input-group-lg">
@@ -139,11 +138,13 @@ printf("question='%s', answer='%s', error_mode=%s",
                             <div class="invalid-feedback">
                                 <?php echo LOC_INVALID_INPUT ?>
                             </div>
-                            <label class="sr-only" for="q"><?php echo LOC_INPUT_PLACEHOLDER ?>"></label>
+                            <label class="sr-only" for="q"><?php echo LOC_INPUT_PLACEHOLDER ?></label>
                         </div>
                     </form>
                 </div>
+                
             </div>
+
         </div>
 
         <div id="eb-footer">
@@ -160,4 +161,3 @@ printf("question='%s', answer='%s', error_mode=%s",
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </body>
 </html>
-
