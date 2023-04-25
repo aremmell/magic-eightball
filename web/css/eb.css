@@ -35,8 +35,6 @@ span.prev-question {
     word-wrap: normal;
 }
 
-/*echo "<spanc class=\"answer-intro\">8-Ball says: <span class=\"answer-text\"$answer</span>";*/
-
 span.answser-intro {
     font-style: bold;
 }
@@ -62,7 +60,7 @@ span.error_mode {
     margin-top: 1.5rem;
 }
  
-#eb-input-text {
+#eb-question-taker {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-right-width: 0;
@@ -87,10 +85,6 @@ span.error_mode {
         border-color: #e0e0e0 !important;   
         color: #e0e0e0 !important;
     }
-
-#eb-question-field {
-
-}
 
 #eb-footer {
     position: absolute;

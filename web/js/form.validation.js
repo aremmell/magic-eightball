@@ -8,7 +8,7 @@
                     evt.stopPropagation();
                     console.error("Form failed to validate!");
                 } else {
-                    let textInput = $("#eb-input-text");
+                    let textInput = $("#eb-question-taker");
                     let base64Text = btoa(textInput.val());
 
                     textInput.val(base64Text);
