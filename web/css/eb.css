@@ -53,11 +53,7 @@ span.error_mode {
     justify-self: center;
     margin-top: 1.5rem;
 }
-
-#eb-form-container {
-    margin-top: 2rem;
-}
-
+ 
 #eb-input-text {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -70,7 +66,7 @@ span.error_mode {
     width: 100% !important;
 }
 
-#eb-input-button {
+#eb-submit-button {
     background-color: indigo;
     color: #e0e0e0;
     border-left-width: 0;
@@ -78,11 +74,15 @@ span.error_mode {
     border-bottom-right-radius: 0.3rem;
     border: 1px solid #9400ff;
 }
-    #eb-input-button:hover {
+    #eb-submit-button:hover {
         background-color: #9400ff !important;     
         border-color: #e0e0e0 !important;   
         color: #e0e0e0 !important;
     }
+
+#eb-question-field {
+
+}
 
 #eb-footer {
     position: absolute;

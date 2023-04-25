@@ -49,7 +49,7 @@ if (!empty($answer) && empty($question)) {
     // We'll just display errors and ask them to try again.
     $error_mode = true;
     $question = "Uh-oh. Looks like we've encountered a problem. Please try submitting another question.";
-    $answer = ""; 
+    $answer = "";
 }
 
 if ($question !== "") {
@@ -117,22 +117,16 @@ if (!empty($answer_pl)) {
         </div>
     </div>
 
-    <div id="eb-form-container" class="container">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col col-6">
-                <form action="index.php" method="get" class="form-inline needs-validation" novalidate>
-                    <div id="eb-question-group" class="input-group input-group-lg">
-                        <input type="text" class="form-control" id="eb-input-text" name="q" placeholder="Type your question..." autocomplete="off" autofocus required>
-                        <div class="input-group-append">
-                            <button type="submit" id="eb-input-button" class="btn btn-outline-primary">go</button>
-                        </div>
-                        <div class="valid-feedback">
-                            Lookin' good.
-                        </div>
+                <form action="index.php" method="get" class="needs-validation" novalidate>
+                    <div class="mx-auto input-group row justify-content-center">
+                        <input type="text" class="form-control" id="eb-question-field" name="q" placeholder="What's your question?" autocomplete="off" autofocus required>
+                        <button id="eb-submit-button" class="btn btn-outline-secondary" type="submit">go</button>
                         <div class="invalid-feedback">
-                            Can't get an answer without a question...
+                            You've gotta enter a question.
                         </div>
-                        <label class="sr-only" for="q">Type your question..."></label>
                     </div>
                 </form>
             </div>
@@ -149,7 +143,6 @@ if (!empty($answer_pl)) {
             echo "<span class=\"footer-entry\">|</span><span><a href=\"/8b/$entire_pl\" target=\"_blank\">Permalink</a></span>";
         } ?>
     </div>
-    <script src="js/jquery.slim.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 
