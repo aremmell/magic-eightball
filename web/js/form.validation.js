@@ -37,7 +37,7 @@
                     i.classList.add('is-invalid');
                 }
 
-                console.log(`got 'blur' update for ${i}; input valid: ${validity}`);
+                console.log('got 'blur' update for ${i}; input valid: ${validity}`);zw
             });
         }
     });

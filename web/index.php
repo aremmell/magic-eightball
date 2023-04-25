@@ -102,38 +102,39 @@ if (!empty($answer_pl)) {
             </div>
         </div>
 
-    <div id="eb-form-container" class="container">
-        <div class="row justify-content-center">
-            <div class="col col-6">
-                <form action="index.php" method="get" class="form-inline needs-validation" novalidate>
-                    <div id="eb-question-group" class="input-group input-group-lg">
-                        <input type="text" class="form-control" id="eb-input-text" name="q" placeholder="Type your question..." autocomplete="off" autofocus required>
-                        <div class="input-group-append">
-                            <button type="submit" id="eb-input-button" class="btn btn-outline-primary">go</button>
+        <!-- Bootstrap 5 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <div id="eb-form-container" class="container">
+            <div class="row justify-content-center">
+                <div class="col col-6">
+                    <form action="index.php" method="get" class="form-inline needs-validation" novalidate>
+                        <div id="eb-question-group" class="input-group input-group-lg">
+                            <input type="text" class="form-control" id="eb-input-text" name="q" placeholder="Type your question..." autocomplete="off" autofocus required>
+                            <div class="input-group-append">
+                                <button type="submit" id="eb-input-button" class="btn btn-outline-primary">go</button>
+                            </div>
+                            <div class="valid-feedback">
+                                <span>Lookin' good.</span>
+                            </div>
+                            <div class="invalid-feedback">
+                                <span>Can't get an answer without a question...</span>
+                            </div>
+                            <label class="sr-only" for="q">Type your question..."></label>
                         </div>
-                        <div class="valid-feedback">
-                            Lookin' good.
-                        </div>
-                        <div class="invalid-feedback">
-                            Can't get an answer without a question...
-                        </div>
-                        <label class="sr-only" for="q">Type your question..."></label>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
 
-        </div>
-
-    <div id="eb-footer">
-        <span class="footer-entry">
-            <a href="<?php echo github_url ?>" target="_blank">
-                <img class="footer-entry" src="img/github-mark.png" alt="GitHub logo" width="24" height="24">GitHub
-            </a>
-        </span>
-        <?php if (!$error_mode && !empty($entire_pl)) {
+         <span class="footer-entry">
+         <?php $clean_url = urldecode(github_url); ?>
+         <a href="<?php echo "$clean_url" ?>" target="_blank">
+             <img class="footer-entry" src="img/github-mark.png" alt="GitHub logo" width="24" height="24">GitHub
+           </a>
+         </span>
+          <?php if (!$error_mode && !empty($entire_pl)) {
             echo "<span class=\"footer-entry\">|</span><span><a href=\"/8b/$entire_pl\" target=\"_blank\">Permalink</a></span>";
         } ?>
-    </div>
-</body>
-
+        </div>
+    </body>
 </html>
