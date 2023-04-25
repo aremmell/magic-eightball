@@ -2,6 +2,7 @@
 
 // Let's get some includes up in here.
 require 'locale.php';
+require 'util.php'
 
 const github_url = "https://github.com/aremmell/magic-eightball";
 const cli_path   = "magic-eightball";
@@ -14,27 +15,6 @@ $error_mode = false;
 $question = isset($_GET["q"]) ? $_GET["q"] : "";
 $answer   = isset($_GET["a"]) ? $_GET["a"] : "";
 
-function encode_io_variables(string $new_value, string &$pl_out)
-{
-    $value_out = htmlentities($new_value);
-    $pl_out = base64_encode($new_value);
-    $pl_out = urlencode($pl_out);
-    return $value_out;
-}
-
-function decode_if_present_in_params(string $param_value)
-{
-    if (empty($param_value))
-        return "";
-
-    $decoded = htmlspecialchars_decode($param_value);
-    $decoded = base64_decode($param_value, true);
-
-    if ($decoded === false)
-        return "";
-
-    return $decoded;
-}
 
 // Try to detect/decode question and answer from the URI.
 $question = decode_if_present_in_params($question);
@@ -48,7 +28,7 @@ $answer = decode_if_present_in_params($answer);
 if (!empty($answer) && empty($question)) {
     // We'll just display errors and ask them to try again.
     $error_mode = true;
-    $question = "Uh-oh. Looks like we've encountered a problem. Please try submitting another question.";
+    $question = LOC_ERRMSG_NO_QUESTION;
     $answer = "";
 }
 
