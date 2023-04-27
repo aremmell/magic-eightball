@@ -1,31 +1,27 @@
 body {
     font-family: 'Montserrat', Arial, Verdana, Tahoma;
-    background: #0b0e13;
+    background: #262b34;
     color:  #cccccc;  
     font-size: 1em;
     padding: 25px;
     margin-bottom: 45px;
 }
 
-a:link {
-    color: #8350ff;
-}
+a:link { color: #8350ff; }
+a:visited { color: #8350ff; }
+a:hover { color: springgreen; }
+a:active { color: #cccccc; }
 
-a:visited {
-    color: #8350ff;
-}
-
-a:hover {
-    color: springgreen;
-}
-
-a:active {
-    color: #cccccc;
+.prev-question-intro {
+    font-style: normal;
+    font-weight: bold;
+    text-align: center;
 }
 
 .prev-question {
     font-style: italic;
-    word-wrap: normal;
+    font-weight: normal;
+    text-align: justify;
 }
 
 .answser-intro {
@@ -36,32 +32,52 @@ a:active {
     font-style: italic;
 }
 
-.error_mode {
-    color: red;
-    font-style: normal;    
+.error_text {
+    color: #b30013;
+    font-style: normal;
+    text-align: center;
 }
 
+.error_intro {
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.error_explanation {
+    font-weight: normal;  
+    font-size: 1.5rem;  
+}
+
+.post-error-divider {
+    color: #ccc;
+    width: 80%;
+    margin-top: 3.3rem;
+}
+
+.post-error-message {
+    margin-top: 0;
+}
+
+    .big-down-arrow {
+        font-size: 8rem;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
 #eb-header {
-    font-size: 3em;
+    display: grid;
+    max-width: 66%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #eb-form-container {
-    margin-top: 3rem;
-    margin-right: 3rem;
-    margin-left: 3rem;
-    margin-bottom: 3rem;
-}
-
-#eb-previous-question {
-    font-size: 1.5rem;
-    text-align: center;
-    justify-self: center;
+    font-size: 1.2rem;
 }
 
 #eb-new-answer {
     text-align: center;
-    justify-self: center;
-    margin-top: 1.5rem;
 }
  
 #eb-question-edit {
@@ -144,11 +160,16 @@ a:active {
     }
 
 #eb-footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
     height: 45px;
     width: 100%;
     text-align: center;
     font-size: 0.9rem;
     z-index: -999;
+
+    border: 1px dotted white;
 }
 
     #eb-footer .footer-entry {
