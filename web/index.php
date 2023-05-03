@@ -124,13 +124,27 @@
     // break this HTML up into sections, and reuse them for different page renderings.
     //
     // Finito.
+    // Right now the below relies on these variables:
+    //  - error_msg
+    //  - error_state
+    //  - question
+    //  - answer
+    // we can just inject these for now to get started.
 
     $error_msg   = "";
+    $question    = "";
+    $answer      = "";
+
     $error_state = app_render_error_page($error_msg);
-    
-    if (!$error_state) {
-        // We can move on to checking the next possible rendering mode!
-    }
+    if ($error_state === true) {
+        // processing stops here and we select error page.
+    } else if (app_render_usual_page()) {
+        // stop here at usual. we can fake it for now.
+    } /*else if (app_render_success_page...) is where it gets complicated.*/
+
+    /* I have confirmed that doing 'include' on another  php file will inject HTML into the dom at
+     * the location  you included it.
+     * So now we have pluggable modules mapped to logic. */
 ?>
 
 <!doctype html>
@@ -156,15 +170,24 @@
                         echo sprintf("<p class=\"error_text error_intro\">%s</p>", LOC_ERROR_INTRO);
                         echo "<p class=\"error_text error_explanation\">$error_msg</p>";
                     } else {
-                        echo sprintf("<p class=\"prev-question-intro\">%s&nbsp;<p class=\"prev-question\">&#x2018;%s&#x2019;</p>",
-                            LOC_YOU_ASKED, $question);
+                        /* can't do this if $question is empty. */
+                        if (empty($question)) {
+                            include 'test-inject.php';
+                           } else {
+                               echo sprintf("<p class=\"prev-question-intro\">%s&nbsp;<p class=\"prev-question\">&#x2018;%s&#x2019;</p>",
+                                LOC_YOU_ASKED, $question);
+                          }
                     }
                 ?>
             <div>
             <div id="eb-new-answer">
                 <?php
                     if ($error_state === false) {
-                        echo sprintf("<span class=\"answer-intro\">%s<span class=\"answer-text\">%s</span>", LOC_ANSWER_PREFIX, $answer);
+                        if (!empty($answer)) {                        
+                            echo sprintf("<span class=\"answer-intro\">%s<span class=\"answer-text\">%s</span>", LOC_ANSWER_PREFIX, $answer);
+                        } else {
+                            
+                        }
                     } else {
                         echo "<hr class=\"post-error-divider\"/>" . 
                              "<div class=\"post-error-message\"><p class=\"big-down-arrow\">&#x261F;</p><p></p></div>";
@@ -183,12 +206,12 @@
         </div>
 
         <div id="eb-footer">
-            <span class="footer-entry">
+            <div class="footer-entry github-logo">
                 <?php $clean_url = urldecode(ME_GITHUB_REPO); ?>
                 <a href="<?php echo "$clean_url" ?>" target="_blank">
                     <img class="footer-entry" src="img/github-mark.png" alt="Visit the GitHub repository." width="24" height="24">
                 </a>
-            </span>
+            </div>
             <?php if ($error_state !== true && !empty($entire_pl)) {
                 echo "<span class=\"footer-entry\">|</span><span><a href=\"/8b/$entire_pl\" target=\"_blank\">Permalink</a></span>";
             } ?>

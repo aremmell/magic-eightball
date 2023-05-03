@@ -20,4 +20,4 @@ It uses the STL's [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twis
 
 ### TODO
 
--   [ ]  There should be a platform-specific `install prefix`, but an obvious way is not presenting itself.
+- [ ]  There should be a platform-specific `install prefix`, but an obvious way is not presenting itself.

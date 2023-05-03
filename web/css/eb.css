@@ -1,6 +1,6 @@
 body {
     font-family: 'Montserrat', Arial, Verdana, Tahoma;
-    background: #262b34;
+    background: #2a2732;
     color:  #cccccc;  
     font-size: 1em;
     padding: 25px;
@@ -160,6 +160,9 @@ a:active { color: #cccccc; }
     }
 
 #eb-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;    
     position: absolute;
     left: 0;
     bottom: 0;
@@ -174,6 +177,14 @@ a:active { color: #cccccc; }
 
     #eb-footer .footer-entry {
         margin-right: 0.5rem;
+        margin-top: auto;
+        margin-bottom: auto;        
+    }
+
+    #eb-footer .github-logo {
+        background: white;
+        width: 24px;
+        height: 24px;
     }
 
 @font-face {
