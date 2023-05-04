@@ -37,7 +37,7 @@
     // we can do is display a page that informs the user that
     // they used a bad [perma]link.
     $a_valid = $appState->get_q_in_params_and_valid();
-    $q_valid = $appState->set_a_in_params_and_valid();
+    $q_valid = $appState->get_a_in_params_and_valid();
 
     if ($a_valid !== false && $q_valid === false) {
         $appState->set_in_error_state(true);
