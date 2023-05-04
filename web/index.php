@@ -88,10 +88,10 @@
     //   3. Question/answer pre-recorded, valid.
     //   4. Question/answer pre-recorded, but invalid;
     //  
-    // The way to select which mode to use is by invoking these functions in
-    // this exact order, and following the rules established by their behavior. However, it is very important
-    // that the following rules are followed carefully: none of these functions may be called until we reach
-    // this point in the script, and perhaps call a function called select_page_to_render() which wraps this
+    // The way to select which mode to use is by invoking these functions in this exact order, and following
+    // the rules established by their behavior.
+    // However, it is very important that the following rules are followed carefully: none of these functions
+    // may be called until we reach this point in the script, and perhaps call a function called select_page_to_render() which wraps this
     // behavior up for us. and secondly, they must always be called in this order with no exception.
     //
     //    1. function app_render_error_page(string& $msg): bool
@@ -100,7 +100,7 @@
     //    2. function app_render_usual_page(): bool
     //        a. Determines that function #1 has returned false.
     //        b. Determines that no pre-recorded question or answer are present.
-    //    3. function app_render_success_page(string& $question, string& $answer, string& $pl_query_params): bool
+    //    3. function app_render_display_answer_page(string& $question, string& $answer, string& $pl_query_params): bool
     //        a. Determines that functions #1 and #2 have both returned false.
     //        b. Ensures that both `ME_Q_PERMALINK_VALUE` and `ME_A_PERMALINK_VALUE` in the app config are non-empty strings.
     //        c. Ensures that `create_permalink_query_params` returns a non-empty string value with the aforementioend as input varibles.
@@ -131,7 +131,7 @@
     //  - answer
     // we can just inject these for now to get started.
 
-    $error_msg   = "";
+   /* $error_msg   = "";
     $question    = "";
     $answer      = "";
 
@@ -140,9 +140,9 @@
         // processing stops here and we select error page.
     } else if (app_render_usual_page()) {
         // stop here at usual. we can fake it for now.
-    } /*else if (app_render_success_page...) is where it gets complicated.*/
+    } / *else if (app_render_display_answer_page...) is where it gets complicated.* /
 
-    /* I have confirmed that doing 'include' on another  php file will inject HTML into the dom at
+     I have confirmed that doing 'include' on another  php file will inject HTML into the dom at
      * the location  you included it.
      * So now we have pluggable modules mapped to logic. */
 ?>
@@ -172,7 +172,7 @@
                     } else {
                         /* can't do this if $question is empty. */
                         if (empty($question)) {
-                            include 'test-inject.php';
+                            /* How could there be no error, but no question? */
                            } else {
                                echo sprintf("<p class=\"prev-question-intro\">%s&nbsp;<p class=\"prev-question\">&#x2018;%s&#x2019;</p>",
                                 LOC_YOU_ASKED, $question);

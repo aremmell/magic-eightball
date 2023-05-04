@@ -12,8 +12,8 @@
  * or redistribute the source code contained herein.
  */
 
- // Key values for the app state key/value map (arrray). Make sure if you add any,
- // they go in the initialization below.
+ // Key-value pairs for the app state map (array). Ensure that if you add any new entries,
+ // they are also initialized in the $appState array with a default (invalid) value.
 const ME_Q_IN_PARAMS_AND_VALID = 1; // boolean: present and decoded from query params.
 const ME_A_IN_PARAMS_AND_VALID = 2; // boolean: present and decoded from query params.
 const ME_IN_ERROR_STATE        = 3; // boolean: render an error page.
@@ -23,7 +23,7 @@ const ME_A_NORMAL_VALUE        = 6; // string: completely plaintext copy of answ
 const ME_Q_PERMALINK_VALUE     = 7; // string: fully encoded copy of question for permalink.    
 const ME_A_PERMALINK_VALUE     = 8; // string: fully encoded copy of answer for permalink.
 
-// Said global app state.
+// Global app state.
 $appState = array
 (
     ME_Q_IN_PARAMS_AND_VALID => false,
@@ -36,28 +36,19 @@ $appState = array
     ME_A_PERMALINK_VALUE => ""
 );
 
-// An enumeration (immutable list) of possible rendering modes
-// of our little application. At the beginning of rendering HTML,
-// we will select one of these and react accordingly.
-//
-// I am thinking it would be easiest and least error prone to name
-// external PHP files after these and inject them in the DOM, rather
-// than having 50 if-else statements in the HTML.
-//
-// The selection of one of these is simple if we follow the
-// logic I detailed in index.php starting at line 83.
-//
-enum RenderMode: string {
-    case Error         = "error-need-to-restart";
-    case Usual         = "prepared-for-query";
-    case Success       = "query-success";
-    case SuccessNoLink = "query-success-no-link";
+// An enumeration (immutable list) of possible rendering modes.
+// At the beginning of rendering HTML, we will select one of
+// these based on the app state and react accordingly.
+enum RenderMode: string
+{
+    case Error                 = "error";
+    case PromptForQuestion     = "prompt-for-question";
+    case DisplayAnswer         = "display-answer";
+    case DisplayAnswerSansLink = "display-answer-sans-link";
 }
 
-// Takes the highest prioity of rendering modes.
-// If anyone has set the error state, the error page
-// will render (with an optional message).
-// TODO: How to handle when there isn't a message?
+// Step #1 in the rendering mode selection process. If an error has occurred,
+// this is the only thing to render.
 function app_render_error_page(string& $msg): bool
 {
     $msg = "";
@@ -65,25 +56,30 @@ function app_render_error_page(string& $msg): bool
 
     if ($appState[ME_IN_ERROR_STATE] === true) {
         $msg = htmlentities($appState[ME_ERROR_STATE_MESSAGE] ?? "");
+
+        if (empty($msg))
+            $msg = LOC_ERRMSG_UNKNOWN;
+
         return true;
     }
 
     return false;
 }
 
-// The most likely rendering path–someone visiting without
-// using a permalink (or trying to attack the site by faking one).
+// The most likely usage scenario: a visitor who's not
+// using a permalink (or trying to exploit our site by counterfeiting one).
 //
 // Prerequisities for this rendering mode are:
-//   1. `app_render_error_page` returns false.
-//   2. Both `ME_Q_IN_PARAMS_AND_VALID` and `ME_A_IN_PARAMS_AND_VALID`
+//
+//   1. app_render_error_page returns false.
+//   2. Both ME_Q_IN_PARAMS_AND_VALID and ME_A_IN_PARAMS_AND_VALID
 //      in the global app state are false.
 //
 // Clearly, we can't trust the caller to verify all of that, so we'll
 // have to do it ourselves.
 //
-// Returns true if it's okay to render the default welcome page, or false
-// if something else needs to be rendered.
+// Returns true if it's okay to use `RenderMode::PromptForQuestion`,
+// or false if something else needs to be rendered.
 function app_render_usual_page(): bool
 {
     global $appState;
@@ -103,19 +99,24 @@ function app_render_usual_page(): bool
 
 // Prerequisites for this rendering mode are:
 //
-//   1. Everything listed in `app_render_usual_page`;
-//   2. Both `ME_Q_PERMALINK_VALUE` and `ME_A_PERMALINK_VALUE` in
+//   1. Everything listed in app_render_usual_page;
+//   2. Both ME_Q_PERMALINK_VALUE and ME_A_PERMALINK_VALUE in
 //      the app config hold non-empty strings.
-//   3. `create_permalink_query_params` must return a non-empty string
+//   3. create_permalink_query_params must return a non-empty string
 //       when passed these values.
-//   4. Both `ME_Q_NORMAL_VALUE` and `ME_A_NORMAL_VALUE` must be present
+//   4. Both ME_Q_NORMAL_VALUE and ME_A_NORMAL_VALUE must be present
 //      and non-empty in the app config.
 //
-// Three is sort of optional; it just means that the permalink cannot be
+// #3 is sort of optional; it just means that the permalink cannot be
 // generated in the footer of the page; everything else should work just fine.
 //
-// I will return true from this function as long as 1 and 4 are true.
-function app_render_success_page(string& $question, string& $answer,
+// Returns true as long as #1 and #4 are true. It will be the responsibility
+// of the caller to verify that $pl_query_params is non-empty, and render the
+// correct HTML.
+//
+// If this function returns false, the only logical thing to do
+// is set an 'unknown error' message and render the error page.
+function app_render_display_answer_page(string& $question, string& $answer,
     string& $pl_query_params): bool
 {
     global $appState;
@@ -142,6 +143,13 @@ function app_render_success_page(string& $question, string& $answer,
     $pl_query_params = create_permalink_query_params($q_encoded, $a_encoded);
 
     return true;
+}
+
+function determine_render_mode(): RenderMode
+{
+    global $appState;
+
+
 }
 
 ?>
