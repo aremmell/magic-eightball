@@ -23,10 +23,11 @@
     $question = "";
     $answer   = "";
 
-    $appState[ME_Q_IN_PARAMS_AND_VALID] = decode_param_if_present($_GET, "q", $question);
-    $appState[ME_A_IN_PARAMS_AND_VALID] = decode_param_if_present($_GET, "a", $answer);
-    $appState[ME_Q_NORMAL_VALUE] = $question;
-    $appState[ME_A_NORMAL_VALUE] = $answer;
+    $appState->set_q_in_params_and_valid(decode_param_if_present($_GET, "q", $question));
+    $appState->set_a_in_params_and_valid(decode_param_if_present($_GET, "a", $answer));
+
+    $appState->set_q_normal_value($question);
+    $appState->set_a_normal_value($answer);
 
     unset($question);
     unset($answer);
@@ -35,15 +36,15 @@
     // that is an error state from which we cannot recover. All
     // we can do is display a page that informs the user that
     // they used a bad [perma]link.
-    $a_valid = $appState[ME_A_IN_PARAMS_AND_VALID];
-    $q_valid = $appState[ME_Q_IN_PARAMS_AND_VALID];
+    $a_valid = $appState->get_q_in_params_and_valid();
+    $q_valid = $appState->set_a_in_params_and_valid();
 
     if ($a_valid !== false && $q_valid === false) {
-        $appState[ME_IN_ERROR_STATE] = true;
-        $appState[ME_ERROR_STATE_MESSAGE] = LOC_ERRMSG_NO_QUESTION;
+        $appState->set_in_error_state(true);
+        $appState->set_error_state_message(LOC_ERRMSG_NO_QUESTION);
     } else if ($q_valid !== false) {
         // All right–we've got a question to send to the magic-eightball CLI tool.
-        $question     = $appState[ME_Q_NORMAL_VALUE];
+        $question     = $appState->get_q_normal_value($qestion);
         $shell_cmd    = sprintf("%s %s %s", ME_CLI_EXEC, ME_CLI_ARGS, escapeshellarg($question));
         $shell_output = array();
         $result_code  = 1;
@@ -65,8 +66,8 @@
             // The values we use for the remainder of the script are only
             // HTML-entity encoded.
 
-            $appState[ME_Q_PERMALINK_VALUE] = encode_permalink_data($question, $q_encoded);
-            $appState[ME_A_PERMALINK_VALUE] = encode_permalink_data($shell_output[0], $a_encoded);
+            $appState->set_q_permalink_value(encode_permalink_data($question, $q_encoded));
+            $appState->set_a_permalink_value(encode_permalink_data($shell_output[0], $a_encoded));
 
             // Now $question and $answer are just plaintext, and stored in
             // $appState[ME_Q_PERMALINK_VALUE], and $apState[ME_A_PERMALINK_VALUE], respectively.
@@ -75,8 +76,8 @@
         } else {
             // We've failed to succcessfully execute the magic-eightball binary.
             // Now we're in an error state.
-            $appState[ME_IN_ERROR_STATE]       = true;
-            $appState[ME_ERROR_STATE_MESSAGE]  = LOC_PROGRAM_FAILURE;
+            $appState->set_in_error_state(true);
+            $appState->set_error_state_message(LOC_PROGRAM_FAILURE);
         }
     }
 

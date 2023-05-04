@@ -23,23 +23,8 @@ const ME_A_NORMAL_VALUE        = 6; // string: completely plaintext copy of answ
 const ME_Q_PERMALINK_VALUE     = 7; // string: fully encoded copy of question for permalink.    
 const ME_A_PERMALINK_VALUE     = 8; // string: fully encoded copy of answer for permalink.
 
-// Global app state.
-$appState = array
-(
-    ME_Q_IN_PARAMS_AND_VALID => false,
-    ME_A_IN_PARAMS_AND_VALID => false,
-    ME_IN_ERROR_STATE => false,
-    ME_ERROR_STATE_MESSAGE => "",
-    ME_Q_NORMAL_VALUE => "",
-    ME_A_NORMAL_VALUE => "",
-    ME_Q_PERMALINK_VALUE => "",
-    ME_A_PERMALINK_VALUE => ""
-);
-
-// An enumeration (immutable list) of possible rendering modes.
-// At the beginning of rendering HTML, we will select one of
-// these based on the app state and react accordingly.
-enum RenderMode: string
+// An enumeration (immutable list) of possible rendering mode names.
+enum RenderModeName: string
 {
     case Error                 = "error";
     case PromptForQuestion     = "prompt-for-question";
@@ -47,109 +32,167 @@ enum RenderMode: string
     case DisplayAnswerSansLink = "display-answer-sans-link";
 }
 
-// Step #1 in the rendering mode selection process. If an error has occurred,
-// this is the only thing to render.
-function app_render_error_page(string& $msg): bool
+final class MagicEightballAppState
 {
-    $msg = "";
-    global $appState;
+    //
+    // Public
+    //
 
-    if ($appState[ME_IN_ERROR_STATE] === true) {
-        $msg = htmlentities($appState[ME_ERROR_STATE_MESSAGE] ?? "");
+    public function compute_render_mode_name(): RenderModeName
+    {
+        if ($this->get_in_error_state() === true)
+            return RenderModeName::Error;
 
-        if (empty($msg))
-            $msg = LOC_ERRMSG_UNKNOWN;
+        if ($this->get_q_in_params_and_valid() === false &&
+            $this->get_a_in_params_and_valid() === false)
+            return RenderModeName::PromptForQuestion;
 
-        return true;
+        $question = $this->get_q_normal_value();
+        $answer = $this->get_a_normal_value();
+        
+        if (empty($question) || empty($answer))
+            return RenderModeName::Error;
+
+        $q_encoded = $this->get_q_permalink_value();
+        $a_encoded = $this->get_a_permalink_value();   
+        
+        if (empty($q_encoded) || empty($a_encoded))
+            return RenderModeName::DisplayAnswerSansLink;   
+
+        return RenderModeName::DisplayAnswer;
     }
 
-    return false;
-}
-
-// The most likely usage scenario: a visitor who's not
-// using a permalink (or trying to exploit our site by counterfeiting one).
-//
-// Prerequisities for this rendering mode are:
-//
-//   1. app_render_error_page returns false.
-//   2. Both ME_Q_IN_PARAMS_AND_VALID and ME_A_IN_PARAMS_AND_VALID
-//      in the global app state are false.
-//
-// Clearly, we can't trust the caller to verify all of that, so we'll
-// have to do it ourselves.
-//
-// Returns true if it's okay to use `RenderMode::PromptForQuestion`,
-// or false if something else needs to be rendered.
-function app_render_usual_page(): bool
-{
-    global $appState;
-
-    $error_msg = "";
-    if (app_render_error_page($error_msg)) {
-         return false;
+    public function get_q_in_params_and_valid(): bool
+    {
+        return $this->_get_bool_from_map(ME_Q_IN_PARAMS_AND_VALID);
     }
 
-    if ($appState[ME_Q_IN_PARAMS_AND_VALID] !== false ||
-        $appState[ME_A_IN_PARAMS_AND_VALID] !== false) {
-        return false;
+    public function set_q_in_params_and_valid(bool $value): void
+    {
+        $this->_set_in_map(ME_Q_IN_PARAMS_AND_VALID, $value);
     }
 
-    return true;
+    public function get_a_in_params_and_valid(): bool
+    {
+        return $this->_get_bool_from_map(ME_A_IN_PARAMS_AND_VALID);
+    }
+
+    public function set_a_in_params_and_valid(bool $value): void
+    {
+        $this->_set_in_map(ME_A_IN_PARAMS_AND_VALID, $value);
+    }
+
+    public function get_in_error_state(): bool
+    {
+        return $this->_get_bool_from_map(ME_IN_ERROR_STATE);
+    }
+
+    public function set_in_error_state(bool $value): void
+    {
+        $this->_set_in_map(ME_IN_ERROR_STATE, $value);
+    }
+
+    public function get_error_state_message(): string
+    {
+        $tmp = $this->_get_htmlentities_string_from_map(ME_ERROR_STATE_MESSAGE);
+
+        if (empty($tmp))
+            $tmp = htmlentities(LOC_ERRMSG_UNKNOWN);
+
+        return $tmp;
+    }
+
+    public function set_error_state_message(string $value): void
+    {
+        if (empty($value))
+            $value = LOC_ERRMSG_UNKNOWN;
+
+        $this->_set_in_map(ME_ERROR_STATE_MESSAGE, $value);
+    }
+
+    public function get_q_normal_value(): string
+    {
+       return $this->_get_htmlentities_string_from_map(ME_Q_NORMAL_VALUE);
+    }
+
+    public function set_q_normal_value(string $value): void
+    {
+        $this->_set_in_map(ME_Q_NORMAL_VALUE, $value);
+    }
+
+    public function get_a_normal_value(): string
+    {
+        return $this->_get_htmlentities_string_from_map(ME_A_NORMAL_VALUE);
+    }
+
+    public function set_a_normal_value(string $value): void
+    {
+        $this->_set_in_map(ME_A_NORMAL_VALUE, $value);
+    }
+
+    public function get_q_permalink_value(): string
+    {
+        return $this->_get_string_from_map(ME_Q_PERMALINK_VALUE);
+    }
+
+    public function set_q_permalink_value(string $value): void
+    {
+        $this->_set_in_map(ME_Q_PERMALINK_VALUE, $value);
+    }
+
+    public function get_a_permalink_value(): string
+    {
+        return $this->_get_string_from_map(ME_A_PERMALINK_VALUE);
+    }
+
+    public function set_a_permalink_value(string $value): void
+    {
+        $this->_set_in_map(ME_A_PERMALINK_VALUE, $value);
+    }
+
+    public function get_permalink(): string
+    {
+        $q_encoded = $this->get_q_permalink_value();
+        $a_encoded = $this->get_a_permalink_value();           
+        return create_permalink_query_params($q_encoded, $a_encoded);
+    }
+
+    //
+    // Protected
+    //
+
+    protected function _get_string_from_map(string $key): string
+    {
+        return $this->_appState[$key] ?? "";
+    }
+
+    protected function _get_htmlentities_string_from_map(string $key): string
+    {
+        return htmlentities($this->_appState[$key] ?? "");
+    }
+
+    protected function _get_bool_from_map(string $key): bool
+    {
+        return $this->_appState[$key] ?? false;
+    }
+
+    protected function _set_in_map(string $key, mixed $value): void
+    {
+        $this->_appState[$key] = $value;
+    }
+
+    protected $_appState = array(
+        ME_Q_IN_PARAMS_AND_VALID => false,
+        ME_A_IN_PARAMS_AND_VALID => false,
+        ME_IN_ERROR_STATE => false,
+        ME_ERROR_STATE_MESSAGE => "",
+        ME_Q_NORMAL_VALUE => "",
+        ME_A_NORMAL_VALUE => "",
+        ME_Q_PERMALINK_VALUE => "",
+        ME_A_PERMALINK_VALUE => ""        
+    );
 }
 
-// Prerequisites for this rendering mode are:
-//
-//   1. Everything listed in app_render_usual_page;
-//   2. Both ME_Q_PERMALINK_VALUE and ME_A_PERMALINK_VALUE in
-//      the app config hold non-empty strings.
-//   3. create_permalink_query_params must return a non-empty string
-//       when passed these values.
-//   4. Both ME_Q_NORMAL_VALUE and ME_A_NORMAL_VALUE must be present
-//      and non-empty in the app config.
-//
-// #3 is sort of optional; it just means that the permalink cannot be
-// generated in the footer of the page; everything else should work just fine.
-//
-// Returns true as long as #1 and #4 are true. It will be the responsibility
-// of the caller to verify that $pl_query_params is non-empty, and render the
-// correct HTML.
-//
-// If this function returns false, the only logical thing to do
-// is set an 'unknown error' message and render the error page.
-function app_render_display_answer_page(string& $question, string& $answer,
-    string& $pl_query_params): bool
-{
-    global $appState;
-    
-    $question        = "";
-    $answer          = "";
-    $pl_query_params = "";
-
-    if (!app_render_usual_page())
-        return false;
-
-    // Check for plaintext question and answer, and prepare them for rendering
-    // in an HTML document.
-    $question = htmlentities($appState[ME_Q_NORMAL_VALUE] ?? "");
-    $answer   = htmlentities($appState[ME_A_NORMAL_VALUE] ?? "");
-    
-    if (empty($question) || empty($answer))
-        return false;
-
-    $q_encoded = $appState[ME_Q_PERMALINK_VALUE];
-    $a_encoded = $appState[ME_A_PERMALINK_VALUE];
-
-    // Generate the permalink query parameters and we're ready to render.
-    $pl_query_params = create_permalink_query_params($q_encoded, $a_encoded);
-
-    return true;
-}
-
-function determine_render_mode(): RenderMode
-{
-    global $appState;
-
-
-}
+$appState = new MagicEightballAppState();
 
 ?>
