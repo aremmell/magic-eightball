@@ -12,19 +12,19 @@
     * or redistribute the source code contained herein.
     */
 
-define("LOC_MAGIC_EIGHTBALL",    "Magic 8-Ball");
+define("LOC_MAGIC_EIGHTBALL",    "The Magic Eightball");
 define("LOC_ERRMSG_NO_QUESTION", "Uh-oh. Looks like we've encountered a problem. Please try submitting another question.");
-define("LOC_ERRMSG_UNKNOWN",       "An error occurred, but it is unclear what went wrong.");
+define("LOC_ERRMSG_UNKNOWN",     "An error occurred, but it is unclear what went wrong.");
 define("LOC_YOU_ASKED",          "You asked:");
-define("LOC_ANSWER_PREFIX",      "8-Ball says:");
+define("LOC_ANSWER_PREFIX",      "Answer:");
 define("LOC_SUBMIT_BUTTON",      "go");
-define("LOC_VALID_INPUT",        "Lookin' good.");
-define("LOC_INVALID_INPUT",      "Can't get an answer without a question!");
-define("LOC_INPUT_PLACEHOLDER",  "So, you have a question I hear...");
+define("LOC_INPUT_PLACEHOLDER",  "What's your question?...");
 define("LOC_ERROR_INTRO",        "Sorry, folks:");
-define("LOC_PROGRAM_FAILURE",    "There was an issue communicating with the 8-Ball program. If this issue persists," .
+define("LOC_PROGRAM_FAILURE",    "There was a failure to communicate with the magic eightball program. If this issue persists," .
                                  " please email me at lederman@gmail.com and I'll look into it.");
 define("LOC_BAD_INPUT",          "Some or all of the data read in by this program was invalid; if you reached this" .
-                                 " page via a hyperlink, it is likely corrupt.");                                  
+                                 " page via a hyperlink, it is likely corrupt.");
+define("LOC_TRY_AGAIN",          "Try again...");
+define("LOC_MISSING_INPUT",      "You've got to type a question.")      
 
 ?>

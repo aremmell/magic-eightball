@@ -28,6 +28,7 @@ enum RenderModeName: string
 {
     case Error                 = "error";
     case PromptForQuestion     = "prompt";
+    case ComputeAnswer         = "compute";
     case DisplayAnswer         = "display";
     case DisplayAnswerSansLink = "display-sans-link";
 }
@@ -43,23 +44,27 @@ final class MagicEightballAppState
         if ($this->get_in_error_state() === true)
             return RenderModeName::Error;
 
+        $question = $this->get_q_normal_value();
+        $answer = $this->get_a_normal_value();
+
         if ($this->get_q_in_params_and_valid() === false &&
             $this->get_a_in_params_and_valid() === false)
             return RenderModeName::PromptForQuestion;
 
-        $question = $this->get_q_normal_value();
-        $answer = $this->get_a_normal_value();
-        
-        if (empty($question) || empty($answer))
-            return RenderModeName::Error;
+        if (!empty($question) && !empty($answer)) {
+            $q_encoded = $this->get_q_permalink_value();
+            $a_encoded = $this->get_a_permalink_value();   
+            
+            if (empty($q_encoded) || empty($a_encoded))
+                return RenderModeName::DisplayAnswerSansLink;
+            
+            return RenderModeName::DisplayAnswer;
+        }
 
-        $q_encoded = $this->get_q_permalink_value();
-        $a_encoded = $this->get_a_permalink_value();   
-        
-        if (empty($q_encoded) || empty($a_encoded))
-            return RenderModeName::DisplayAnswerSansLink;   
+        if (!empty($question) && empty($answer))
+            return RenderModeName::ComputeAnswer;        
 
-        return RenderModeName::DisplayAnswer;
+        return RenderModeName::Error;
     }
 
     public function get_q_in_params_and_valid(): bool
@@ -148,6 +153,14 @@ final class MagicEightballAppState
     public function set_a_permalink_value(string $value): void
     {
         $this->_set_in_map(ME_A_PERMALINK_VALUE, $value);
+    }
+
+    public function has_permalink(): bool
+    {
+        $q_encoded = $this->get_q_permalink_value();
+        $a_encoded = $this->get_a_permalink_value();
+
+        return (!empty($q_encoded) && !empty($a_encoded));
     }
 
     public function get_permalink(): string

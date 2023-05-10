@@ -1,16 +1,28 @@
 body {
     font-family: 'Montserrat', Arial, Verdana, Tahoma;
-    background: #2a2732;
-    color:  #cccccc;  
+    background: #2a2732 !important;
+    color:  #cccccc !important;  
     font-size: 1em;
     padding: 25px;
     margin-bottom: 45px;
 }
 
-a:link { color: #8350ff; }
-a:visited { color: #8350ff; }
-a:hover { color: springgreen; }
-a:active { color: #cccccc; }
+a:link { color: #8350ff !important; }
+a:visited { color: #8350ff !important; }
+a:hover { color: springgreen !important; }
+a:active { color: #cccccc !important; }
+
+.eb-button {
+    background-color: indigo;
+    color: #e0e0e0;
+    border: 0 1px 1px 1px solid #9400ff !important;
+}
+
+.eb-button:hover {
+    background-color: #9400ff !important;
+    border-color: #e0e0e0 !important;
+    color: #e0e0e0 !important;
+}
 
 @font-face {
     font-family: 'Montserrat';
@@ -25,7 +37,9 @@ a:active { color: #cccccc; }
 
 .eb-header {
     display: grid;
+    text-align: center;
     max-width: 66%;
+    min-height: 15%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -42,18 +56,19 @@ a:active { color: #cccccc; }
     text-align: center;
     font-size: 0.9rem;
     z-index: -999;
-
-    border: 1px dotted white;
 }
 
 .eb-footer .footer-entry {
-    margin-right: 0.5rem;
     margin-top: auto;
     margin-bottom: auto;
 }
 
 .eb-footer .github-logo {
-    background: white;
     width: 24px;
     height: 24px;
+}
+
+.eb-footer .separator {
+    margin-left: 0.5em;
+    margin-right: 0.5em;    
 }

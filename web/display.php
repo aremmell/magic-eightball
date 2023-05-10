@@ -3,31 +3,44 @@
 ?>
 
 <style>
-    .prev-question-container {}
-
-    .prev-question-intro {
-        font-style: normal;
-        font-weight: bold;
+    .prev-question-container {
         text-align: center;
     }
 
-    .prev-question {
-        font-style: italic;
-        font-weight: normal;
-        text-align: justify;
+    .prev-question-intro {
+        font-size: 2.5em;
+        font-style: normal;
+        font-weight: bold;
     }
 
-    .new-answer-container {}
+    .prev-question {
+        color: #888;
+        font-size: 1.5em;
+        font-style: italic;
+        font-weight: normal;
+    }
 
-    .answser-intro {
-        font-style: bold;
+    .question-answer-divider {
+        color: #ccc;
+        width: 100%;
+    }
+
+    .answer-container {
+        margin-top: 1rem;
+    }
+
+    .answer-intro {
+        font-size: 2.5em;
+        font-weight: bold;
     }
 
     .answer-text {
+        color: #888;
+        font-size: 1.5em;
+        font-weight: normal;
         font-style: italic;
-    }    
+    }
 </style>
-
 
 <!-- <body> -->
 
@@ -43,7 +56,8 @@
             &#x2019;
         </p>
     </div>
-    <div id="new-answer-container">
+    <hr class="question-answer-divider"/>
+    <div class="answer-container">
         <p class="answer-intro">
             <?php echo htmlentities(LOC_ANSWER_PREFIX); ?>
         </p>

@@ -3,21 +3,20 @@
 ?>
 
 <style>
+    .header-text {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+    }
 
     .eb-form-container {
-        font-size: 1.2rem;
         max-width: 66%;
-        margin-right: auto;
         margin-left: auto;
+        margin-right: auto;
     }
 
     .eb-question-edit {
-        display: flex;
-        flex-grow: 1;
-        flex-basis: fit-content;
         min-width: 470px;
         width: 100%;
-        flex-shrink: 0;
 
         border-left-width: 0 !important;
         border-top-right-radius: 0 !important;
@@ -25,12 +24,11 @@
         border-right-width: 0 !important;
         border-bottom-right-radius: 0 !important;
         border-bottom-width: 0 !important;
-        line-height: 24px;
         background-color: #e0e0e0;
         color: #85939d;
     }
 
-    /*.eb-question-edit:focus-visible {
+    .eb-question-edit:focus-visible {
         border-left-width: 0 !important;
         border-top-width: 0 !important;
         border-right-width: 0 !important;
@@ -39,9 +37,6 @@
     }
 
    .eb-question-edit:focus {
-
-        /* box-shadow: inset 0 0 0 0 #9400ff, inset 0 0 0 2px #e0e0e0; * /
-
         border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
         border-right-width: 0 !important;
@@ -53,36 +48,25 @@
 
         box-shadow: none !important;
         transition: border-color none !important;
-    }*/
-
-    .single-line-input-group {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        width: 100%;
     }
 
     .eb-submit-button {
-        display: flex;
-        flex-grow: 0;
-        flex-basis: fit-content;
-        flex-shrink: 1;
         background-color: indigo;
         color: #e0e0e0;
-        border-left-width: 0;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        border-top-right-radius: 0.3rem;
-        border-bottom-right-radius: 0.3rem;
-        border: 0 1px 1px 1px solid #9400ff;
+        border-left-width: 0 !important;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        border-top-right-radius: 0.3rem !important;
+        border-bottom-right-radius: 0.3rem !important;
+        border: 0 1px 1px 1px solid #9400ff !important;
     }
 
     .eb-submit-button:focus-visible {
-        border-left-width: 0;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        border-top-right-radius: 0.3rem;
-        border-bottom-right-radius: 0.3rem;
+        border-left-width: 0 !important;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        border-top-right-radius: 0.3rem !important;
+        border-bottom-right-radius: 0.3rem !important;
     }
 
     .eb-submit-button:hover {
@@ -94,21 +78,27 @@
 
 <!-- <body> -->
 
-
-<div class="display-header">
-    <?php ?>
+<div class="eb-header">
+    <p class="header-text">
+        TODO: Go ahead, ask me anything.
+    </p>
 </div>
 
 <?php
     $placeholder = htmlentities(LOC_INPUT_PLACEHOLDER);
     $submit_caption = htmlentities(LOC_SUBMIT_BUTTON);
+    $invalid_feedback = htmlentities(LOC_MISSING_INPUT);
 ?>
 
-<link rel="stylesheet" href="css/question-form.css">
-
-<div class="eb-form-container">
-    <form class="needs-validation" action="index.php" method="get">
-        <input type="text" class="eb-question-edit form-control xm_auto" name="q" placeholder="<?php echo $placeholder; ?>" autocomplete="off" autofocus required>
-        <button type="submit" class="eb-submit-button"><?php echo $submit_caption; ?></button>
+<div class="row eb-form-container">
+    <form class="needs-validation" action="index.php" method="get" novalidate>
+        <div class="input-group col-6">
+            <input type="text" id="eb-question-edit" class="eb-question-edit form-control" name="q" placeholder="<?php echo $placeholder; ?>" autocomplete="off" autofocus required>        
+            <button type="submit" class="eb-submit-button btn btn-outline-secondary"><?php echo $submit_caption; ?></button>
+            <div class="invalid-feedback">
+                <?php echo $invalid_feedback; ?>
+            </div>                
+        </div>
     </form>
-</div>
+</form>
+

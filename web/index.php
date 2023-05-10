@@ -22,8 +22,12 @@
     
     $question = "";
     $answer   = "";
-    $q_valid  = decode_param_if_present($_GET, "q", $question);
-    $a_valid  = decode_param_if_present($_GET, "a", $answer);
+
+    $q_encoded = "";
+    $a_encoded = "";
+    
+    $q_valid   = extract_params_from_query($_GET, "q", $question, $q_encoded);
+    $a_valid   = extract_params_from_query($_GET, "a", $answer, $a_encoded);
 
     $appState->set_q_in_params_and_valid($q_valid);
     $appState->set_a_in_params_and_valid($a_valid);
@@ -31,8 +35,8 @@
     $appState->set_q_normal_value($question);
     $appState->set_a_normal_value($answer);
 
-    unset($question);
-    unset($answer);
+    $appState->set_q_permalink_value($q_encoded);
+    $appState->set_a_permalink_value($a_encoded);
 
     // If an answer is present and valid, but a question is not,
     // that is an error state from which we cannot recover. All
@@ -41,35 +45,40 @@
     if ($a_valid !== false && $q_valid === false) {
         $appState->set_in_error_state(true);
         $appState->set_error_state_message(LOC_ERRMSG_NO_QUESTION);
-    } else if ($q_valid !== false) {
-        // All right–we've got a question to send to the magic-eightball CLI tool.
-        $question     = $appState->get_q_normal_value($qestion);
-        $shell_cmd    = sprintf("%s %s %s", ME_CLI_EXEC, ME_CLI_ARGS, escapeshellarg($question));
+    }
+
+    // Let the app state object decide which page we render:
+    $renderModeName = $appState->compute_render_mode_name();
+    $module         = "";
+
+    switch ($renderModeName)
+    {
+        case RenderModeName::PromptForQuestion:
+            $module = "prompt";
+            break;
+        case RenderModeName::ComputeAnswer:
+            $module = "display";
+            break;
+        case RenderModeName::DisplayAnswer:
+            $module = "display";
+            break;
+        case RenderModeName::DisplayAnswerSansLink:
+            $module = "display";
+            break;
+        case RenderModeName::Error:
+        default:
+            $module = "error";
+            break;
+    }
+
+    // All right–we've got a question to send to the magic-eightball CLI tool.
+    if ($renderModeName == RenderModeName::ComputeAnswer) {
+
         $shell_output = array();
-        $result_code  = 1;
-        $exec_retval  = exec($shell_cmd, $shell_output, $result_code);
 
-        if ($exec_retval != false || $result_code === 0 && count($shell_output) > 0) {
-            // The execution of the CLI tool was succcessful, and we have an
-            // answer to provide to the user. At this time, we will prepare 
-            // the data necessary to construct a permalink that represents
-            // this pair of question and answser–forever, so that the user
-            // may revisit it for a laugh or encouragement.
-            // 
-            // However, this form of the encoded data is kept separate for
-            // display in the resulting web page we're about to render.
-            //
-            // The values for the permalink will be HTML-entity encoded,
-            // then base64 encoded, then URL-encoded.
-            //
-            // The values we use for the remainder of the script are only
-            // HTML-entity encoded.
-
-            $appState->set_q_permalink_value(encode_permalink_data($question, $q_encoded));
-            $appState->set_a_permalink_value(encode_permalink_data($shell_output[0], $a_encoded));
-
-            // Now $question and $answer are just plaintext, and stored in their encoded forms in $appState.
-            // Functions that return this type of data to the DOM-rendering code will add htmlenties.
+        if (execute_magic_eightball_cli($question, $shell_output)) {
+            $answer = $shell_output[0];
+            $appState->set_a_permalink_value(encode_permalink_data($answer));
         } else {
             // We've failed to succcessfully execute the magic-eightball binary.
             // Now we're in an error state.
@@ -78,27 +87,16 @@
         }
     }
 
-    // Let the app state object decide which page we render:
-    $renderModeName = $appState->compute_render_mode_name();
-    $module      = "";
+    // For debugging:
+    /*$tmp = "";
+    $tmp2 = "";
+    if (extract_params_from_query($_GET, "e", $tmp, $tmp2)) {
+        $renderModeName = RenderModeName::Error;
+        $appState->set_error_state_message($tmp);
+        $module = "error";
+    }*/
 
-    switch ($renderModeName)
-    {
-        case RenderModeName::PromptForQuestion:
-            $directory = "prompt";
-            break;
-        case RenderModeName::DisplayAnswer:
-            $directory = "display";
-            break;
-        case RenderModeName::DisplayAnswerSansLink:
-            $directory = "display";
-            break;
-        case RenderModeName::Error:
-            $directory = "error";
-        default:
-            break;
-    }
-?>
+    ?>
 
 <!doctype html>
 <html lang="en">
@@ -109,27 +107,34 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Ryan M. Lederman <lederman@gmail.com>">
-        <link rel="icon" type="image/png" href="img/favicon.png">
+        <link rel="icon" href="favicon.ico" sizes="any">            
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="manifest" href="icon.webmanifest">
         <link rel="stylesheet" href="css/index.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <script src="js/jquery-3.6.4.min.js"></script>
         <script src="js/magic-eightball.js"></script>
     </head>
 
     <body>
-        <?php
-            require($module . ".php");
-            $permalink = $appState->get_permalink();
-        ?>
+        <div class="container-fluid">
+            <?php
+                require($module . ".php");
+                $hasPermalink = $appState->has_permalink();
+                $permalink    = $hasPermalink ? $appState->get_permalink() : "";
+            ?>
 
-        <div class="eb-footer">
-            <div class="footer-entry github-logo">
-                <a href="<?php echo ME_GITHUB_REPO; ?>" target="_blank">
-                    <img class="footer-entry" src="img/github-mark.png" alt="Visit the GitHub repository." width="24" height="24">
-                </a>
+            <div class="eb-footer">
+                <div class="footer-entry github-logo">
+                    <a href="<?php echo ME_GITHUB_REPO; ?>" target="_blank">
+                        <img class="footer-entry" src="img/github-mark-white.png" alt="Visit the GitHub repository." width="24" height="24">
+                    </a>
+                </div>
+                <?php if (RenderModeName::Error !== $renderModeName && $hasPermalink === true) {
+                    echo "<div class=\"footer-entry permalink\"><span class=\"separator\">|</span><a href=\"/$permalink\" target=\"_blank\">Permalink</a></div>";
+                } ?>
             </div>
-            <?php if (RenderModeName::Error !== $renderModeName && !empty($permalink)) {
-                echo "<span class=\"footer-entry\">|</span><span><a href=\"/8b/$permalink\" target=\"_blank\">Permalink</a></span>";
-            } ?>
-        </div>        
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     </body>
 </html>

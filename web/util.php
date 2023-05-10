@@ -21,10 +21,11 @@
         if (empty($plain_text))
             return "";
             
-        $value_out = htmlentities($plain_text);
-        $pl_out = base64_encode($plain_text);
-        $pl_out = urlencode($pl_out);
-        return $pl_out;
+        $plain_text = htmlentities($plain_text);
+        //$plain_text = base64_encode($plain_text);
+        $plain_text = urlencode($plain_text);
+        
+        return $plain_text;
     }
 
     // htmlentity-decodes and then base64-decodes a value from the query parameters.
@@ -35,12 +36,14 @@
     //  3. $param_key is empty;
     //  4. Or the value returned for $param_key fails to be decoded;
     //
-    // Returns boolean succcess. When false, sets $out to an empty string. When
-    // true, sets $out to the the decoded value.
-    function decode_param_if_present(array|null $params, string $param_key, string& $out): bool
+    // Returns boolean succcess. When false, sets $out_plaintext and $out_encoded to an
+    // empty strings. When true, sets them to the decoded and encoded values, respectively.
+    function extract_params_from_query(array|null $params, string $param_key, string& $out_plaintxt,
+        string& $out_encoded): bool
     {
-        $out = "";
-
+        $out_plaintxt = "";
+        $out_encoded  = "";
+        
         if (!$params || empty($param_key) || !array_key_exists($param_key, $params))
             return false;
 
@@ -52,13 +55,15 @@
         if (!$param_value || empty($param_value))
             return false;
 
+        $out_encoded = $param_value;
+            
         $decoded = html_entity_decode($param_value);
-        $decoded = base64_decode($decoded, true);
+        //$decoded = base64_decode($decoded, true);
 
         if ($decoded === false)
             return false;
 
-        $out = $decoded;
+        $out_plaintxt = $decoded;
         return true;
     }
     
@@ -81,7 +86,7 @@
         $retval = "";
 
         if (!empty($q_encoded)) {
-            $retval .= "?=" . $q_encoded;
+            $retval .= "?q=" . $q_encoded;
         }
 
         if (!empty($a_encoded)) {
@@ -91,4 +96,30 @@
         return $retval;
     }
 
-?>
+    // Executes the magic-eightball CLI program, passing a question string to it
+    // and capturing its stdout.
+    //
+    // Returns false if the shell code is other than zero, or if the stdout is
+    // empty.
+    //
+    // If successful, places the array of lines from stdout in $stdout. Otherwise,
+    // an empty array.
+    function execute_magic_eightball_cli(string $question, array& $stdout): bool
+    {
+        $stdout = array();
+
+        if (empty($question))
+            return false;
+
+        $shell_cmd    = sprintf("%s %s %s", ME_CLI_EXEC, ME_CLI_ARGS, escapeshellarg($question));
+        $shell_output = array();
+        $result_code  = 1;
+        $exec_retval  = exec($shell_cmd, $shell_output, $result_code);
+
+        if ($exec_retval != false || $result_code === 0 && count($shell_output) > 0) {
+            $stdout = $shell_output;
+            return true;
+        } else {
+            return false;
+        }  
+    }
