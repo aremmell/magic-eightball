@@ -13,31 +13,31 @@
  */
 
  // Key-value pairs for the app state map (array). Ensure that if you add any new entries,
- // they are also initialized in the $appState array with a default (invalid) value.
+ // they are also initialized in the MagicEightballAppState::_stateMap array with a default (invalid) value.
 const ME_Q_IN_PARAMS_AND_VALID = 1; // boolean: present and decoded from query params.
 const ME_A_IN_PARAMS_AND_VALID = 2; // boolean: present and decoded from query params.
 const ME_IN_ERROR_STATE        = 3; // boolean: render an error page.
 const ME_ERROR_STATE_MESSAGE   = 4; // string: an error description to display on the page.
-const ME_Q_NORMAL_VALUE        = 5; // string: completely plaintext copy of question.
-const ME_A_NORMAL_VALUE        = 6; // string: completely plaintext copy of answer.
-const ME_Q_PERMALINK_VALUE     = 7; // string: fully encoded copy of question for permalink.    
-const ME_A_PERMALINK_VALUE     = 8; // string: fully encoded copy of answer for permalink.
+const ME_Q_NORMAL_VALUE        = 5; // string: plaintext copy of question.
+const ME_A_NORMAL_VALUE        = 6; // string: plaintext copy of answer.
+const ME_Q_PERMALINK_VALUE     = 7; // string: encoded copy of question for permalink.    
+const ME_A_PERMALINK_VALUE     = 8; // string: encoded copy of answer for permalink.
 
-// An enumeration (immutable list) of possible rendering mode names.
+// An immutable list of possible rendering modes, by name.
 enum RenderModeName: string
 {
     case Error                 = "error";
-    case PromptForQuestion     = "prompt-for-question";
-    case DisplayAnswer         = "display-answer";
-    case DisplayAnswerSansLink = "display-answer-sans-link";
+    case PromptForQuestion     = "prompt";
+    case DisplayAnswer         = "display";
+    case DisplayAnswerSansLink = "display-sans-link";
 }
 
 final class MagicEightballAppState
 {
-    //
-    // Public
-    //
+    // Public //
 
+    // the central decision-maker for how the app will render itself,
+    // based on the app state.
     public function compute_render_mode_name(): RenderModeName
     {
         if ($this->get_in_error_state() === true)
@@ -94,7 +94,7 @@ final class MagicEightballAppState
 
     public function get_error_state_message(): string
     {
-        $tmp = $this->_get_htmlentities_string_from_map(ME_ERROR_STATE_MESSAGE);
+        $tmp = $this->_get_string_from_map(ME_ERROR_STATE_MESSAGE, true);
 
         if (empty($tmp))
             $tmp = htmlentities(LOC_ERRMSG_UNKNOWN);
@@ -112,7 +112,7 @@ final class MagicEightballAppState
 
     public function get_q_normal_value(): string
     {
-       return $this->_get_htmlentities_string_from_map(ME_Q_NORMAL_VALUE);
+       return $this->_get_string_from_map(ME_Q_NORMAL_VALUE, true);
     }
 
     public function set_q_normal_value(string $value): void
@@ -122,7 +122,7 @@ final class MagicEightballAppState
 
     public function get_a_normal_value(): string
     {
-        return $this->_get_htmlentities_string_from_map(ME_A_NORMAL_VALUE);
+        return $this->_get_string_from_map(ME_A_NORMAL_VALUE, true);
     }
 
     public function set_a_normal_value(string $value): void
@@ -157,31 +157,27 @@ final class MagicEightballAppState
         return create_permalink_query_params($q_encoded, $a_encoded);
     }
 
-    //
-    // Protected
-    //
+    // Private //
 
-    protected function _get_string_from_map(string $key): string
+    private function _get_string_from_map(string $key, bool $htmlencode = false): string
     {
-        return $this->_appState[$key] ?? "";
+        $ret = $this->_stateMap[$key] ?? "";
+        if ($htmlencode === true)
+            $ret = htmlentities($ret);
+        return $ret;
     }
 
-    protected function _get_htmlentities_string_from_map(string $key): string
+    private function _get_bool_from_map(string $key): bool
     {
-        return htmlentities($this->_appState[$key] ?? "");
+        return $this->_stateMap[$key] ?? false;
     }
 
-    protected function _get_bool_from_map(string $key): bool
+    private function _set_in_map(string $key, mixed $value): void
     {
-        return $this->_appState[$key] ?? false;
+        $this->_stateMap[$key] = $value;
     }
 
-    protected function _set_in_map(string $key, mixed $value): void
-    {
-        $this->_appState[$key] = $value;
-    }
-
-    protected $_appState = array(
+    private $_stateMap = array(
         ME_Q_IN_PARAMS_AND_VALID => false,
         ME_A_IN_PARAMS_AND_VALID => false,
         ME_IN_ERROR_STATE => false,

@@ -81,7 +81,7 @@
         $retval = "";
 
         if (!empty($q_encoded)) {
-            $retval .= "?a=" . $q_encoded;
+            $retval .= "?=" . $q_encoded;
         }
 
         if (!empty($a_encoded)) {

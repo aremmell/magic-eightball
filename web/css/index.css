@@ -1,0 +1,59 @@
+body {
+    font-family: 'Montserrat', Arial, Verdana, Tahoma;
+    background: #2a2732;
+    color:  #cccccc;  
+    font-size: 1em;
+    padding: 25px;
+    margin-bottom: 45px;
+}
+
+a:link { color: #8350ff; }
+a:visited { color: #8350ff; }
+a:hover { color: springgreen; }
+a:active { color: #cccccc; }
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    font-style: italic;
+    src: url('../fonts/Montserrat-MediumItalic.ttf') format('truetype');
+}
+
+.eb-header {
+    display: grid;
+    max-width: 66%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.eb-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 45px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    z-index: -999;
+
+    border: 1px dotted white;
+}
+
+.eb-footer .footer-entry {
+    margin-right: 0.5rem;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.eb-footer .github-logo {
+    background: white;
+    width: 24px;
+    height: 24px;
+}
