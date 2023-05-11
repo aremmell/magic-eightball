@@ -1,11 +1,7 @@
-<?php
-    $home_href = create_permalink_prefix();
-?>
-
 <script>
     $(function() {
         $("button.btn-eb-primary").click(function() {
-            window.location.href = "<?php echo $home_href; ?>";
+            window.location.href = "<?php echo create_permalink_prefix(); ?>";
         });
     });
 </script>
@@ -53,7 +49,7 @@
 <div class="eb-header">
     <div class="error-title-container">
         <p class="error-text error-intro">
-            <?php echo htmlentities(LOC_ERROR_INTRO); ?>
+            <?php echo_loc_string(LOC_ERROR_INTRO); ?>
         </p>
         <p class="error-text error-explanation">
             <?php echo $appState->get_error_state_message(); ?>
@@ -61,6 +57,6 @@
     </div>
     <hr class="post-error-divider" />
     <div class="post-error-message">
-        <button class="btn btn-lg btn-eb-primary" type="button"> <?php echo htmlentities(LOC_TRY_AGAIN); ?> </button>
+        <button class="btn btn-lg btn-eb-primary" type="button"> <?php echo_loc_string(LOC_TRY_AGAIN); ?> </button>
     </div>
 </div>

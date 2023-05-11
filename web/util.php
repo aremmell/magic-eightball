@@ -147,3 +147,17 @@
             return false;
         }  
     }
+
+    // Just pulls up the locale string and runs it through htmlentities,
+    // since this is done all over the codebase.
+    function get_html_ready_loc_string(string $loc_id): string
+    {
+        return htmlentities($loc_id);
+    }
+
+    // Another handy utility function to load a loc string and
+    // echo it into the DOM.
+    function echo_loc_string(string $loc_id): void
+    {
+        echo get_html_ready_loc_string($loc_id);
+    }

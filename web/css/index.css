@@ -7,6 +7,17 @@ body {
     margin-bottom: 45px;
 }
 
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    font-style: italic;
+    src: url('../fonts/Montserrat-MediumItalic.ttf') format('truetype');
+}
+
 a:link { color: #8350ff !important; }
 a:visited { color: #8350ff !important; }
 a:hover { color: springgreen !important; }
@@ -38,17 +49,6 @@ a:active { color: #cccccc !important; }
     background-color: #9400ff !important;
     border-color: #e0e0e0 !important;
     color: #e0e0e0 !important;
-}
-
-@font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Medium.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'Montserrat';
-    font-style: italic;
-    src: url('../fonts/Montserrat-MediumItalic.ttf') format('truetype');
 }
 
 .eb-header {
