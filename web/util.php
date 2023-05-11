@@ -52,17 +52,18 @@
         // and base64 encoded strings.
         if (!$param_value || empty($param_value))
             return false;
-           
-        $decoded = html_entity_decode($param_value);
-        $decoded = base64_decode($decoded, true);
 
-        if ($decoded === false)
+        $param_value = urldecode($param_value);
+        $param_value = html_entity_decode($param_value);
+        $param_value = base64_decode($param_value, true);
+
+        if ($param_value === false)
             return false;
 
-        $out = $decoded;
+        $out = $param_value;
         return true;
     }
-    
+
     // HACKHACK:
     // Creates a string that contains the protocol, the host name, and the path
     // to the script that's running. This is intended to create links back to the root directory.
@@ -73,7 +74,7 @@
     {
         // TODO: For now, use $_SERVER["HTTP_HOST"] to figure out where
         // we're running without hard-coding the domain in. This should be
-        // taken care of in a more thorough manner later. 
+        // taken care of in a more thorough manner later.
         $https = isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] === "on";
         $retval = "http" . ($https === true ? "s" : "") . "://";
 
@@ -83,13 +84,13 @@
         $retval .= $_SERVER["HTTP_HOST"];
 
         if (!isset($_SERVER["PHP_SELF"]))
-            return "";  
-        
+            return "";
+
         // Next, we've got to parse the URI, just in case we decide to add
         // more folders/files later.
         $matches = array();
         if (preg_match_all('#(\/[\/\w._-]+\/?)#si', $_SERVER["PHP_SELF"], $matches) !== 1) {
-            $retval .= "/";            
+            $retval .= "/";
         } else {
             $retval .= $matches[1][0];
         }
@@ -135,7 +136,7 @@
         if (empty($question))
             return false;
 
-        $shell_cmd    = sprintf("%s %s %s", ME_CLI_EXEC, ME_CLI_ARGS, escapeshellarg($question));
+        $shell_cmd    = sprintf("%s %s %s", ME_CLI_BINARY, ME_CLI_CMDLINE, escapeshellarg($question));
         $shell_output = array();
         $result_code  = 1;
         $exec_retval  = exec($shell_cmd, $shell_output, $result_code);
@@ -143,9 +144,9 @@
         if ($exec_retval != false || $result_code === 0 && count($shell_output) > 0) {
             $stdout = $shell_output;
             return true;
-        } else {
-            return false;
-        }  
+        }
+
+        return false;
     }
 
     // Just pulls up the locale string and runs it through htmlentities,
