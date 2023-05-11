@@ -43,11 +43,8 @@ final class MagicEightballAppState
         return $this->_renderMode = $this->_compute_render_mode();
     }
 
-    public function get_in_error_state(null|string& $msg): bool
+    public function get_in_error_state(): bool
     {
-        if ($msg)
-            $msg = $this->get_error_state_message();
-
         return $this->_get_bool_from_map(ME_IN_ERROR_STATE);
     }
 
