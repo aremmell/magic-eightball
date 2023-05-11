@@ -11,20 +11,20 @@
     * Please read the LICENSE file if you intend to modify
     * or redistribute the source code contained herein.
     */
-    
-    // takes plaintext input and returns htmlentity-encoded,
+
+    // Takes plaintext input and returns htmlentity-encoded,
     // then base64-encoded, then URL-encoded version of the input.
-    //    
+    //
     // Returns the encoded string, or an empty string if an error occurs.
     function encode_permalink_data(string $plain_text): string
     {
         if (empty($plain_text))
             return "";
-            
+
         $plain_text = htmlentities($plain_text);
         $plain_text = base64_encode($plain_text);
         $plain_text = urlencode($plain_text);
-        
+
         return $plain_text;
     }
 
@@ -162,3 +162,4 @@
     {
         echo get_html_ready_loc_string($loc_id);
     }
+?>
