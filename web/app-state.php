@@ -167,7 +167,7 @@ final class MagicEightballAppState
     {
         $q_encoded = $this->get_q_permalink_value();
         $a_encoded = $this->get_a_permalink_value();           
-        return create_permalink_query_params($q_encoded, $a_encoded);
+        return "/" . create_permalink_query_params($q_encoded, $a_encoded);
     }
 
     // Private //

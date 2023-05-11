@@ -17,14 +17,16 @@ define("LOC_ERRMSG_NO_QUESTION", "Uh-oh. Looks like we've encountered a problem.
 define("LOC_ERRMSG_UNKNOWN",     "An error occurred, but it is unclear what went wrong.");
 define("LOC_YOU_ASKED",          "You asked:");
 define("LOC_ANSWER_PREFIX",      "Answer:");
+define("LOC_PROMPT_INTRO",       "Go ahead, ask a question!");
 define("LOC_SUBMIT_BUTTON",      "go");
-define("LOC_INPUT_PLACEHOLDER",  "What's your question?...");
+define("LOC_INPUT_PLACEHOLDER",  "Yes or no questions are the best.");
 define("LOC_ERROR_INTRO",        "Sorry, folks:");
 define("LOC_PROGRAM_FAILURE",    "There was a failure to communicate with the magic eightball program. If this issue persists," .
                                  " please email me at lederman@gmail.com and I'll look into it.");
 define("LOC_BAD_INPUT",          "Some or all of the data read in by this program was invalid; if you reached this" .
                                  " page via a hyperlink, it is likely corrupt.");
-define("LOC_TRY_AGAIN",          "Try again...");
-define("LOC_MISSING_INPUT",      "You've got to type a question.")      
-
+define("LOC_TRY_AGAIN",          "Let's try again!");
+define("LOC_MISSING_INPUT",      "You've got to type a question.");
+define("LOC_COPY_PERMALINK",     "Copy permalink");
+define("LOC_HOME",               "Home");
 ?>

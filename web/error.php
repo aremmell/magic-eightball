@@ -4,7 +4,7 @@
 
 <script>
     $(function() {
-        $("#try-again").click(function() {
+        $("button.btn-eb-primary").click(function() {
             window.location.href = "/";
         });
     });
@@ -61,6 +61,6 @@
     </div>
     <hr class="post-error-divider" />
     <div class="post-error-message">
-        <a class="try-again" href="/" role="button"> <?php echo htmlentities(LOC_TRY_AGAIN); ?> </a>
+        <button class="btn btn-lg btn-eb-primary" href="/" type="button"> <?php echo htmlentities(LOC_TRY_AGAIN); ?> </button>
     </div>
 </div>

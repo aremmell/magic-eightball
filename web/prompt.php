@@ -5,7 +5,14 @@
 <style>
     .header-text {
         font-size: 3rem;
-        margin-bottom: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .eb-ball-image {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .eb-form-container {
@@ -15,9 +22,7 @@
     }
 
     .eb-question-edit {
-        min-width: 470px;
-        width: 100%;
-
+        flex-grow: 1;
         border-left-width: 0 !important;
         border-top-right-radius: 0 !important;
         border-top-width: 0 !important;
@@ -29,25 +34,15 @@
     }
 
     .eb-question-edit:focus-visible {
-        border-left-width: 0 !important;
-        border-top-width: 0 !important;
-        border-right-width: 0 !important;
-        border-bottom-width: 0 !important;
-        transition: border-color none !important;
+        outline: 0 none;
+        padding-right: 1rem !important;
     }
 
    .eb-question-edit:focus {
         border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
         border-right-width: 0 !important;
-
-        padding-top: 0.375rem;
-        padding-right: 0.75rem;
-        padding-bottom: 0.375rem;
-        padding-left: 0.75rem;
-
-        box-shadow: none !important;
-        transition: border-color none !important;
+        padding-right: 1rem !important;
     }
 
     .eb-submit-button {
@@ -74,31 +69,34 @@
         border-color: #e0e0e0 !important;
         color: #e0e0e0 !important;
     }
+
 </style>
 
 <!-- <body> -->
 
+<?php
+    $placeholder      = htmlentities(LOC_INPUT_PLACEHOLDER);
+    $submit_caption   = htmlentities(LOC_SUBMIT_BUTTON);
+    $invalid_feedback = htmlentities(LOC_MISSING_INPUT);
+    $prompt_intro     = htmlentities(LOC_PROMPT_INTRO);
+    $image_alt        = htmlentities(LOC_MAGIC_EIGHTBALL);
+?>
+
 <div class="eb-header">
+    <img class="eb-ball-image" src="icon.svg" width="128" height="128" alt="<?php echo $image_alt; ?>" />
     <p class="header-text">
-        TODO: Go ahead, ask me anything.
+        <?php echo $prompt_intro; ?>
     </p>
 </div>
 
-<?php
-    $placeholder = htmlentities(LOC_INPUT_PLACEHOLDER);
-    $submit_caption = htmlentities(LOC_SUBMIT_BUTTON);
-    $invalid_feedback = htmlentities(LOC_MISSING_INPUT);
-?>
-
-<div class="row eb-form-container">
+<div class="eb-form-container">
     <form class="needs-validation" action="index.php" method="get" novalidate>
         <div class="input-group col-6">
-            <input type="text" id="eb-question-edit" class="eb-question-edit form-control" name="q" placeholder="<?php echo $placeholder; ?>" autocomplete="off" autofocus required>        
-            <button type="submit" class="eb-submit-button btn btn-outline-secondary"><?php echo $submit_caption; ?></button>
+            <input type="text" id="eb-question-edit" class="eb-question-edit form-control-lg" name="q" placeholder="<?php echo $placeholder; ?>" autocomplete="off" autofocus required>        
+            <button type="submit" class="eb-submit-button btn btn-lg btn-outline-secondary"><?php echo $submit_caption; ?></button>
             <div class="invalid-feedback">
                 <?php echo $invalid_feedback; ?>
             </div>                
         </div>
     </form>
 </form>
-

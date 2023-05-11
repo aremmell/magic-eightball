@@ -87,8 +87,8 @@
         }
     }
 
-    // For debugging:
-    /*$tmp = "";
+    /*// For debugging:
+    $tmp = "";
     $tmp2 = "";
     if (extract_params_from_query($_GET, "e", $tmp, $tmp2)) {
         $renderModeName = RenderModeName::Error;
@@ -107,11 +107,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Ryan M. Lederman <lederman@gmail.com>">
-        <link rel="icon" href="favicon.ico" sizes="any">            
+        <link rel="icon" href="favicon.png">
+        <link rel="icon" href="favicon.ico" sizes="any">
+        <link rel="icon" href="icon.svg" type="image/svg+xml">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <link rel="manifest" href="icon.webmanifest">
-        <link rel="stylesheet" href="css/index.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/index.css">        
         <script src="js/jquery-3.6.4.min.js"></script>
         <script src="js/magic-eightball.js"></script>
     </head>
@@ -120,8 +122,6 @@
         <div class="container-fluid">
             <?php
                 require($module . ".php");
-                $hasPermalink = $appState->has_permalink();
-                $permalink    = $hasPermalink ? $appState->get_permalink() : "";
             ?>
 
             <div class="eb-footer">
@@ -130,9 +130,6 @@
                         <img class="footer-entry" src="img/github-mark-white.png" alt="Visit the GitHub repository." width="24" height="24">
                     </a>
                 </div>
-                <?php if (RenderModeName::Error !== $renderModeName && $hasPermalink === true) {
-                    echo "<div class=\"footer-entry permalink\"><span class=\"separator\">|</span><a href=\"/$permalink\" target=\"_blank\">Permalink</a></div>";
-                } ?>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
