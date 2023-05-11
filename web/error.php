@@ -1,11 +1,11 @@
 <?php
-
+    $home_href = create_permalink_prefix();
 ?>
 
 <script>
     $(function() {
         $("button.btn-eb-primary").click(function() {
-            window.location.href = "/";
+            window.location.href = "<?php echo $home_href; ?>";
         });
     });
 </script>
@@ -61,6 +61,6 @@
     </div>
     <hr class="post-error-divider" />
     <div class="post-error-message">
-        <button class="btn btn-lg btn-eb-primary" href="/" type="button"> <?php echo htmlentities(LOC_TRY_AGAIN); ?> </button>
+        <button class="btn btn-lg btn-eb-primary" type="button"> <?php echo htmlentities(LOC_TRY_AGAIN); ?> </button>
     </div>
 </div>

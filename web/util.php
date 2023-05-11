@@ -22,7 +22,7 @@
             return "";
             
         $plain_text = htmlentities($plain_text);
-        //$plain_text = base64_encode($plain_text);
+        $plain_text = base64_encode($plain_text);
         $plain_text = urlencode($plain_text);
         
         return $plain_text;
@@ -36,14 +36,12 @@
     //  3. $param_key is empty;
     //  4. Or the value returned for $param_key fails to be decoded;
     //
-    // Returns boolean succcess. When false, sets $out_plaintext and $out_encoded to an
-    // empty strings. When true, sets them to the decoded and encoded values, respectively.
-    function extract_params_from_query(array|null $params, string $param_key, string& $out_plaintxt,
-        string& $out_encoded): bool
+    // Returns boolean succcess. Upon failure, sets $out to an empty string. Upon success,
+    // places the decoded parameter in $out.
+    function extract_params_from_query(array|null $params, string $param_key, string& $out): bool
     {
-        $out_plaintxt = "";
-        $out_encoded  = "";
-        
+        $out = "";
+
         if (!$params || empty($param_key) || !array_key_exists($param_key, $params))
             return false;
 
@@ -54,44 +52,70 @@
         // and base64 encoded strings.
         if (!$param_value || empty($param_value))
             return false;
-
-        $out_encoded = $param_value;
-            
+           
         $decoded = html_entity_decode($param_value);
-        //$decoded = base64_decode($decoded, true);
+        $decoded = base64_decode($decoded, true);
 
         if ($decoded === false)
             return false;
 
-        $out_plaintxt = $decoded;
+        $out = $decoded;
         return true;
     }
     
+    // HACKHACK:
+    // Creates a string that contains the protocol, the host name, and the path
+    // to the script that's running. This is intended to create links back to the root directory.
+    //
+    // Returns a URL to the root directory of the installation if successful,
+    // or an empty string upon failure.
+    function create_permalink_prefix(): string
+    {
+        // TODO: For now, use $_SERVER["HTTP_HOST"] to figure out where
+        // we're running without hard-coding the domain in. This should be
+        // taken care of in a more thorough manner later. 
+        $https = isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] === "on";
+        $retval = "http" . ($https === true ? "s" : "") . "://";
+
+        if (!isset($_SERVER["HTTP_HOST"]))
+            return "";
+
+        $retval .= $_SERVER["HTTP_HOST"];
+
+        if (!isset($_SERVER["PHP_SELF"]))
+            return "";  
+        
+        // Next, we've got to parse the URI, just in case we decide to add
+        // more folders/files later.
+        $matches = array();
+        if (preg_match_all('#(\/[\/\w._-]+\/?)#si', $_SERVER["PHP_SELF"], $matches) !== 1) {
+            $retval .= "/";            
+        } else {
+            $retval .= $matches[1][0];
+        }
+
+        return $retval;
+    }
+
     // Takes as input the output of the `encode_permalink_data` function,
     // as two separate query parameter values to include in a URI that points
-    // back at this installation.
+    // back at a particular question/answer pair.
     //
-    // Returns the permalink URI if both inputs are !empty(). They will be
-    // evaluated left-to-right, and the first letter of their name will be
-    // the query parameter's key (.e.g, $q_encoded becomes ?q=). If either
-    // of them are empty, or in some later iteration of this code determined
-    // to be invalid, an empty string will be returned.
-    //
-    // NOTE: This function does *not* return the protocol, hostname, or port
-    // parts; it only creates the query parameters to append to whichever
-    // installation this is–right now we don't have a good way to determine
-    // that, so it's safer to leave that code in index.php.
+    // Returns the query paramaters ready to be tacked on to the end of the permalink if successful.
+    // Upon failure, returns an empty string.
     function create_permalink_query_params(string $q_encoded, string $a_encoded): string
     {
         $retval = "";
 
-        if (!empty($q_encoded)) {
-            $retval .= "?q=" . $q_encoded;
-        }
+        if (empty($q_encoded))
+            return "";
 
-        if (!empty($a_encoded)) {
-            $retval .= "&a=" . $a_encoded;
-        }
+        $retval .= "?q=" . $q_encoded;
+
+        if (empty($a_encoded))
+            return "";
+
+        $retval .= "&a=" . $a_encoded;
 
         return $retval;
     }

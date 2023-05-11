@@ -70,6 +70,54 @@
         color: #e0e0e0 !important;
     }
 
+    /* 
+     * These are according to Bootstrap.
+     * 
+     * Extra small: <= 576px
+     * Small: > 576px and <= 768px
+     * Medium: > 768px and <= 992px
+     * (I don't really care about the rest)
+     */
+    @media only screen and (max-width: 992px) {
+        .eb-header {
+            max-width: 100%;
+        }
+
+        .header-text {
+            font-size: 2.5rem;
+        }
+
+        .eb-ball-image {
+            width: 96px;
+            height: 96px;
+        }
+
+        .eb-form-container {
+            max-width: 100%;
+        }
+    }     
+
+    @media only screen and (max-width: 768px) {
+        body {
+            padding: 10px;
+        }
+
+        .eb-question-edit  {
+            font-size: 1rem;
+        }
+    }
+        
+    @media only screen and (max-width: 576px) {
+        .header-text {
+            font-size: 2rem;
+        }
+
+        .eb-ball-image {
+            width: 64px;
+            height: 64px;
+        }        
+    }
+
 </style>
 
 <!-- <body> -->
@@ -89,7 +137,7 @@
     </p>
 </div>
 
-<div class="eb-form-container">
+<div class="row eb-form-container">
     <form class="needs-validation" action="index.php" method="get" novalidate>
         <div class="input-group col-6">
             <input type="text" id="eb-question-edit" class="eb-question-edit form-control-lg" name="q" placeholder="<?php echo $placeholder; ?>" autocomplete="off" autofocus required>        

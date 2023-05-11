@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <style>
     .prev-question-container {
         text-align: center;
@@ -54,6 +50,7 @@
     $answerPrefix  = htmlentities(LOC_ANSWER_PREFIX);
     $copyPermalink = htmlentities(LOC_COPY_PERMALINK);
     $home          = htmlentities(LOC_HOME);
+    $home_href     = create_permalink_prefix();
     $permalink     = $appState->get_permalink();
 
     // It only seems appropriate that if no question mark was entered
@@ -70,7 +67,7 @@
         });
 
         $("#home").click(() => {
-            window.location.href = "/";
+            window.location.href = "<?php echo $home_href; ?>";
         });
     });
 </script>
@@ -103,6 +100,6 @@
         <button id="permalink" class="btn btn-lg btn-eb-primary"><?php echo $copyPermalink; ?></button>
     </p>
     <p>    
-        <button id="home" class="btn btn-lg btn-eb-primary" href="/" role="button"><?php echo $home; ?></button>
+        <button id="home" class="btn btn-lg btn-eb-primary" role="button"><?php echo $home; ?></button>
     </p>
 </div>

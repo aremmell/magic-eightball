@@ -17,9 +17,9 @@
             evt.preventDefault();
             evt.stopPropagation();
           } else {
-            /*let base64Text = btoa(textInput.val());
+            let base64Text = btoa(textInput.val());
             textInput.css("color", "#e0e0e0");
-            textInput.val(base64Text);          */
+            textInput.val(base64Text);
           }
         }, true);
       }

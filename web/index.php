@@ -23,20 +23,8 @@
     $question = "";
     $answer   = "";
 
-    $q_encoded = "";
-    $a_encoded = "";
-    
-    $q_valid   = extract_params_from_query($_GET, "q", $question, $q_encoded);
-    $a_valid   = extract_params_from_query($_GET, "a", $answer, $a_encoded);
-
-    $appState->set_q_in_params_and_valid($q_valid);
-    $appState->set_a_in_params_and_valid($a_valid);
-
-    $appState->set_q_normal_value($question);
-    $appState->set_a_normal_value($answer);
-
-    $appState->set_q_permalink_value($q_encoded);
-    $appState->set_a_permalink_value($a_encoded);
+    $q_valid = extract_params_from_query($_GET, "q", $question);
+    $a_valid = extract_params_from_query($_GET, "a", $answer);
 
     // If an answer is present and valid, but a question is not,
     // that is an error state from which we cannot recover. All
@@ -46,6 +34,9 @@
         $appState->set_in_error_state(true);
         $appState->set_error_state_message(LOC_ERRMSG_NO_QUESTION);
     }
+
+    $appState->set_question_value($question);
+    $appState->set_answer_value($answer);    
 
     // Let the app state object decide which page we render:
     $renderModeName = $appState->compute_render_mode_name();
@@ -63,6 +54,11 @@
             $module = "display";
             break;
         case RenderModeName::DisplayAnswerSansLink:
+            // TODO: The rendering modules do not check for this
+            // render mode before trying to display the permalink.
+            // The render mode should be stored in $appState so that
+            // it can determine whether or not to give the caller the
+            // permalink if they ask for it.
             $module = "display";
             break;
         case RenderModeName::Error:
@@ -78,7 +74,7 @@
 
         if (execute_magic_eightball_cli($question, $shell_output)) {
             $answer = $shell_output[0];
-            $appState->set_a_permalink_value(encode_permalink_data($answer));
+            $appState->set_answer_value($answer);
         } else {
             // We've failed to succcessfully execute the magic-eightball binary.
             // Now we're in an error state.
@@ -86,17 +82,7 @@
             $appState->set_error_state_message(LOC_PROGRAM_FAILURE);
         }
     }
-
-    /*// For debugging:
-    $tmp = "";
-    $tmp2 = "";
-    if (extract_params_from_query($_GET, "e", $tmp, $tmp2)) {
-        $renderModeName = RenderModeName::Error;
-        $appState->set_error_state_message($tmp);
-        $module = "error";
-    }*/
-
-    ?>
+?>
 
 <!doctype html>
 <html lang="en">
@@ -120,6 +106,7 @@
 
     <body>
         <div class="container-fluid">
+
             <?php
                 require($module . ".php");
             ?>
