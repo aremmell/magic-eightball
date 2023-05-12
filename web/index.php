@@ -19,12 +19,14 @@
     $question = "";
     $answer   = "";
 
+    $q_valid = extract_params_from_query($_GET, "q", $question);
+    $a_valid = extract_params_from_query($_GET, "a", $answer);
+
     // If an answer is present and valid, but a question is not,
     // that is an error state from which we cannot recover. All
     // we can do is display a page that informs the user that
     // they used a bad [perma]link.
-    if (extract_params_from_query($_GET, "a", $answer) !== false && 
-        extract_params_from_query($_GET, "q", $question) === false) {
+    if ($a_valid !== false && $q_valid === false) {
         $appState->set_in_error_state(true, LOC_ERRMSG_NO_QUESTION);
     }
 
