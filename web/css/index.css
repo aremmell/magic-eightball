@@ -111,10 +111,6 @@ a:active { color: #cccccc !important; }
         width: 96px;
         height: 96px;
     }
-
-    .eb-form-container {
-        max-width: 100%;
-    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -125,16 +121,43 @@ a:active { color: #cccccc !important; }
     .eb-question-edit {
         font-size: 1rem;
     }
+
+    .eb-ball-image {
+        width: 80px;
+        height: 80px;
+    }    
 }
 
 @media only screen and (max-width: 576px) {
+    .eb-form-container {
+        max-width: fit-content !important;
+    }
+
+    .prev-question-intro {
+        font-size: 2rem !important;
+    }
+
+    .prev-question {
+        font-size: 1.3rem !important;
+    }
+
+    .answer-intro {
+        font-size: 2rem !important;
+    }
+
+    .answer-text {
+        font-size: 1.3rem !important;
+    }
+}
+
+@media only screen and (max-width: 360px) {
     .header-text {
-        font-size: 2rem;
+        font-size: 2.5rem !important;
     }
 
     .eb-ball-image {
         width: 64px;
         height: 64px;
-    }
+    }    
 }
     
