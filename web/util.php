@@ -54,8 +54,8 @@
             return false;
 
         $param_value = urldecode($param_value);
-        $param_value = html_entity_decode($param_value);
         $param_value = base64_decode($param_value, true);
+        $param_value = html_entity_decode($param_value);
 
         if ($param_value === false)
             return false;
