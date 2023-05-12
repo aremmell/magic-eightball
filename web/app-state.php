@@ -31,8 +31,6 @@
         case PromptForQuestion     = "prompt";
         case ComputeAnswer         = "compute";
         case DisplayAnswer         = "display";
-
-        public const DisplayAnswerSansLink = self::DisplayAnswer;
     }
 
     final class MagicEightballAppState
@@ -108,10 +106,6 @@
 
         public function get_permalink(): string
         {
-            // Can we permalink?
-            if ($this->_renderMode == RenderMode::DisplayAnswerSansLink)
-                return "";
-
             $params = create_permalink_query_params($this->get_q_permalink_value(),
                 $this->get_a_permalink_value());
 
@@ -141,16 +135,8 @@
             if (empty($question) && empty($answer))
                 return RenderMode::PromptForQuestion;
 
-            if (!empty($question) && !empty($answer)) {
-
-                $q_encoded = $this->get_q_permalink_value();
-                $a_encoded = $this->get_a_permalink_value();
-
-                if (empty($q_encoded) || empty($a_encoded))
-                    return RenderMode::DisplayAnswerSansLink;
-
+            if (!empty($question) && !empty($answer))
                 return RenderMode::DisplayAnswer;
-            }
 
             if (!empty($question) && empty($answer))
                 return RenderMode::ComputeAnswer;
@@ -181,7 +167,7 @@
             ME_IN_ERROR_STATE => false,
             ME_ERROR_STATE_MESSAGE => "",
             ME_QUESTION_VALUE => "",
-            ME_ANSWER_VALUE => "",
+            ME_ANSWER_VALUE => ""
         );
 
         private $_renderMode = RenderMode::Error;

@@ -12,6 +12,7 @@
     }
 
     .eb-form-container {
+        min-width: 312px !important;
         max-width: 66%;
         margin-left: auto;
         margin-right: auto;
@@ -76,7 +77,7 @@
     </p>
 </div>
 
-<div class="row eb-form-container">
+<div class="eb-form-container">
     <form class="needs-validation" action="index.php" method="get" novalidate>
         <div class="input-group col-6">
             <input type="text" id="eb-question-edit" class="eb-question-edit form-control-lg" name="q" placeholder="<?php echo_loc_string(LOC_INPUT_PLACEHOLDER); ?>" autocomplete="off" autofocus required>        
