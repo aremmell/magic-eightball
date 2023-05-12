@@ -13,12 +13,12 @@ cmake_policy(SET CMP0066 NEW) # CMAKE_<LANG>_FLAGS_<BUILDTYPE>
 # toolchain-related
 set(CXX_FLAGS_DEBUG -g -O0 -DDEBUG)
 set(CXX_FLAGS_RELEASE -O3 -DNDEBUG)
-#set(CMAKE_CXX_COMPILER /Library/Developer/CommandLineTools/usr/bin/clang++)
+set(CMAKE_CXX_COMPILER /usr/bin/g++)
 
 # define the project
 project(
     ${PROJECT_NAME}
-    VERSION 1.2.0
+    VERSION 1.2.1
     LANGUAGES CXX
     DESCRIPTION "The Magic Eightball toy, in digital form."
     HOMEPAGE_URL https://github.com/aremmell/magic-eightball/
