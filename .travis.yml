@@ -23,3 +23,5 @@ stages:
     - script : cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build/install --check-system-vars -S . -B build -G Ninja
   - name: build
     - script : cmake --build build --clean-first --verbose --target magic-eightball
+  - name: test
+    - script : build/magic-eightball -q "Will this build work?"
