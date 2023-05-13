@@ -11,7 +11,7 @@ os:
 dist: bionic
 osx_image: xcode14.3
 install:
-  - cmake 3.26.3
+  - cmake
   - ninja
 arch:
   - amd64
@@ -20,3 +20,6 @@ compiler:
   - g++
 stages:
   - name: configure
+    - script : cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build/install --check-system-vars -S . -B build -G Ninja
+  - name: build
+    - script : cmake --build build --clean-first --verbose --target magic-eightball
