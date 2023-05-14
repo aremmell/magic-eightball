@@ -4,7 +4,7 @@ language:
   - php
 branches:
   only:
-  - master
+    - master
 os:
   - linux
   - osx
