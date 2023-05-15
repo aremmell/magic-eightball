@@ -30,10 +30,8 @@ arch:
   - aarch64
   - armhf
 before_script:
-  - ./configure.sh check-cmake
+  - ./configure.sh cmake-info
 script:
-  - cmake --preset release
-  - cmake --build --preset release
-  - build/magic-eightball -q "Do you think this will work?"
+  - ./configure.sh build
 compiler:
   - g++
