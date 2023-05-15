@@ -7,6 +7,7 @@
 #
 
 function cmake_configure() {
+    mkdir -p build/install && \
     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build/install \
           --check-system-vars -S . -B build -G Ninja
 }
