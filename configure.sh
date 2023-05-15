@@ -1,56 +1,43 @@
 #!/bin/bash
 
-update_cmake_from_publisher() {
-    local _arch=$(uname -m)
-    local _url=""
-
-    echo "Machine architecture is: $_arch"
-
-    if [[ $_arch = "x86_64" ]]; then
-        _url="https://github.com/Kitware/CMake/releases/download/v3.26.3/cmake-3.26.3-linux-x86_64.sh"
-    elif [[ $_arch = "aarch64" ]]; then
-        _url="https://github.com/Kitware/CMake/releases/download/v3.26.3/cmake-3.26.3-linux-aarch64.sh"
-    else
-        echo "No package provided for $_arch. Would need to build from source. Giving up."
-        return 1
-    fi
-
-    echo "Downloading cmake 3.26.3-linux-${_arch} from Kitware..."
-    if ! wget "${_url}" -O cmake-installer.sh; then
-        echo "Download failed; Giving up."
-        return 1
-    fi
-
-    echo "Completed download; installing..."
-    if sudo chmod +x cmake-installer.sh && sudo ./cmake-installer.sh --skip-license --prefix=/usr/local; then
-        sudo rm cmake-installer.sh
-        export PATH="/usr/local/bin:$PATH"
-        echo "Installation completed in /usr/local; PATH variable updated. Done."
-        return 0
-    else
-        echo "Installation failed. Giving up."
-        return 1
-    fi
-}
-
-# $1 = the name of a variable to receive
+# $1 = the path to cmake
+# $2 = the name of a variable to receive
 # an array containing the version segments
 get_cmake_version() {
-    if [[ -z ${1} ]]; then
+    if [[ ! -x ${1} ]] || [[ -z ${2} ]]; then
         return 1
     fi
 
-    local _ver_output=$(cmake --version)
+    local _ver_output=$("${1}" --version)
     if [[ $_ver_output =~ [^\d]+([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
         local _major=${BASH_REMATCH[1]}
         local _minor=${BASH_REMATCH[2]}
         local _patch=${BASH_REMATCH[3]}
 
-        eval $1'=($_major $_minor $_patch)'
+        eval $2'=($_major $_minor $_patch)'
         return 0
     fi
 
     return 1
+}
+
+# $1 = left hand side number
+# $2 = right hand side number
+# $3 = name of a variable to receive the return value
+#
+# returns:
+# -1 if left > right
+#  0 if left == right
+#  1 if left < right
+numeric_compare() {
+    local _ret=0
+    if [[ ${1} -gt ${2} ]]; then
+        _ret=-1
+    elif [[ ${1} -lt ${2} ]]; then
+        _ret=1
+    fi
+
+    eval $3'=$_ret'
 }
 
 # $1 = version number array from get_cmake_version.
@@ -67,54 +54,96 @@ is_cmake_preset_capable() {
     return 0
 }
 
+is_cmake_snap_installed() {
+    [[ -x /snap/bin/cmake ]]
+}
+
 # $1 = version number array from get_cmake_version.
 print_cmake_version() {
     echo "${1}.${2}.${3}"
 }
 
-print_cmake_info() {
+# $1 = path to cmake
+_print_cmake_info() {
+    if [[ ! -x ${1} ]]; then
+        return 1
+    fi
+
     _cur_ver=()
-    get_cmake_version _cur_ver
+    get_cmake_version "${1}" _cur_ver
     
-    echo -n "cmake = $(which cmake), and its version is $(print_cmake_version ${_cur_ver[@]})"
+    echo -n "cmake = ${1}, and its version is $(print_cmake_version ${_cur_ver[@]})"
 
     if is_cmake_preset_capable "${_cur_ver[@]}"; then
         echo " (preset capable)"
     else
         echo " (NOT preset capable)"
-    fi 
+    fi
 }
 
-update_cmake_if_required() {
-    local _too_old=false
+print_cmake_info() {
+    _print_cmake_info "$(which cmake)"
 
-    echo "Checking current version..."
+    if is_cmake_snap_installed; then
+        _print_cmake_info "/snap/bin/cmake"
+    fi
+}
 
-    _cur_ver=();
-    if get_cmake_version _cur_ver; then
-        echo "Current version is $(print_cmake_version ${_cur_ver[@]})"    
-        if ! is_cmake_preset_capable; then
-            _too_old=true
-        fi
-    else
-        _too_old = true
+# $1 = the name of a variable that will receive
+# the path of the cmake binary to use.
+# $2 = the name of a variable that will receive
+# the version number of the cmake binary chosen.
+select_cmake_binary() {
+    if [[ -z ${1} ]] || [[ -z ${2} ]]; then
+        return 1
     fi
 
-    if [[ $_too_old = true ]]; then
-        echo "Current version is too old; updating..."
-        if ! update_cmake_from_publisher; then
-            return 1
+    local _binary="$(which cmake)"
+
+    if is_cmake_snap_installed; then
+        # compare versions; select the higher one.
+        _ver1=()
+        get_cmake_version "${_binary}" _ver1
+
+        _ver2=()
+        get_cmake_version "/snap/bin/cmake" _ver2
+
+        _majors=0
+        numeric_compare ${_ver1[0]} ${_ver2[0]} _majors
+
+        _minors=0
+        numeric_compare ${_ver1[1]} ${_ver2[1]} _minors
+
+        _patches=0
+        numeric_compare ${_ver1[2]} ${_ver2[2]} _patches
+
+        if [[ ${_majors} -lt 0 ]] || [[ ${_minors} -lt 0 ]] || [[ ${_patches} -lt 0 ]]; then
+            _binary="/snap/bin/cmake"
+            eval $2'=(${_ver1[@]})'
+        else
+            eval $2'=(${_ver2[@]})'
         fi
     fi
+
+    echo "Using cmake = ${_binary}"
+    eval $1'=${_binary}'
 }
 
 build_magic_eightball() {
     # if cmake is new enough (>= 3.20.0), using the preset commands
     # will work. If cmake is older, we will have to figure out a workaround.
+
+    # we could have more than one instance of cmake sitting around. in particular,
+    # a snap–check 'which cmake' and check for a snap version. select whichever
+    # has the higher version.
     print_cmake_info
+
+    _cmake="$(which cmake)"
+    _cmake_ver=()
+    select_cmake_binary _cmake _cmake_ver
     
     local _use_presets=false
-    if is_cmake_preset_capable ${_cur_ver[@]}; then
+    if is_cmake_preset_capable ${_cmake_ver[@]}; then
         _use_presets=true
         echo "cmake is new enough to proceed with preset commands..."
     else
@@ -124,11 +153,11 @@ build_magic_eightball() {
 
     if [[ ${_use_presets} = true ]]; then
         echo "=== Available presets ==="
-        cmake --list-presets
+        ${_cmake} --list-presets
         echo "========================="
 
-        cmake --debug-output --fresh --preset release && \
-        cmake --debug-output --build --preset release
+        ${_cmake} --debug-output --preset release && \
+        ${_cmake} --debug-output --build --preset release
     else
         # the CMake Tools extension will print out the commands
         # that *should* work without the presets file. Let's just try those.
@@ -138,11 +167,10 @@ build_magic_eightball() {
         # is clearly explained in the documentation.
         mkdir -p build/install
 
-        # this is configure
-        cmake --debug-output --fresh -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build/install \
+        # this is configure, then build
+        ${_cmake} --debug-output -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build/install \
               --check-system-vars -S$(pwd) -B$(pwd)/build -G Ninja && \
-        # this is build
-        cmake --debug-output --verbose  --build $(pwd)/build --clean-first --target magic-eightball 
+        ${_cmake} --debug-output --verbose --build $(pwd)/build --clean-first --target magic-eightball 
     fi
 
     [[ -x "build/magic-eightball" ]] && build/magic-eightball -q "Do you think this will work?"
@@ -150,9 +178,6 @@ build_magic_eightball() {
 
 _args=($@)
 case ${_args[0]} in
-    #"update-cmake")
-     #   update_cmake_if_required
-      #  ;;
     "cmake-info")
         print_cmake_info
         ;;
