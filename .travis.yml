@@ -9,11 +9,16 @@ os:
   - osx
 dist: bionic
 osx_image: xcode14.3
-install:
-  linux:
-    - sudo apt-get install -y cmake ninja-build
-  osx:
-    - brew install cmake ninja
+addons:
+  homebrew:
+    packages:
+      - cmake
+      - ninja
+      update: true
+  apt:
+    packages:
+      - cmake
+      - ninja-build
 arch:
   - amd64
   - arm64
