@@ -9,6 +9,7 @@ cmake_policy(SET CMP0065 NEW) # ENABLE_EXPORTS
 cmake_policy(SET CMP0126 NEW) # cache
 cmake_policy(SET CMP0056 NEW) # CMAKE_EXE_LINKER_FLAGS
 cmake_policy(SET CMP0066 NEW) # CMAKE_<LANG>_FLAGS_<BUILDTYPE>
+cmake_policy(SET CMP0102 NEW) # mark_as_advanced
 
 # toolchain-related
 set(CXX_FLAGS_DEBUG -g -O0 -DDEBUG)
