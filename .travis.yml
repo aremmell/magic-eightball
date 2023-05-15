@@ -9,6 +9,7 @@ os:
   - linux
   - osx
 dist: bionic
+osx_image: xcode14.3
 addons:
   snaps:
     - name: cmake
@@ -17,9 +18,7 @@ addons:
   apt:
     update: true
     packages:
-      - ninja-build
-osx_image: xcode14.3
-addons:
+      - ninja-build      
   homebrew:
     update: true
     packages:
@@ -30,6 +29,8 @@ arch:
   - arm64
   - aarch64
   - armhf
+before_script:
+  - ./configure.sh check-cmake
 script:
   - cmake --preset release
   - cmake --build --preset release
