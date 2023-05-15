@@ -16,11 +16,11 @@ addons:
       confinement: classic
       channel: latest/stable
   apt:
-    update: false
+    update: true
     packages:
       - ninja-build      
   homebrew:
-    update: true
+    update: false
     packages:
       - cmake
       - ninja
