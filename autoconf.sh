@@ -5,15 +5,16 @@
 # It is primarily used for Travis CI, but can also be used to build
 # the project outside of VS Code.
 #
+set -x
+_current_dir=$(pwd)
 
 function cmake_configure() {
-    mkdir -p build/install && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build/install \
-          --check-system-vars -S . -B build -G Ninja
+    cmake --version; \
+    mkdir -p build/install && cmake --preset release
 }
 
 function cmake_build() {
-    cmake --build build --clean-first --verbose --target magic-eightball
+    cmake --build --preset release
 }
 
 function cmake_test() {
