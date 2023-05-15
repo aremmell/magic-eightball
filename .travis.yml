@@ -1,4 +1,3 @@
-version: ~> 1.0
 language:
   - cpp
   - php
@@ -20,9 +19,6 @@ compiler:
   - g++
 jobs:
   include:
-    - stage: configure
-      - script: ./autoconf.sh configure
-    - stage: build
-      - script: ./autoconf.sh build
-    - stage: test
-      - script: ./autoconf.sh test
+    - script: "./autoconf.sh configure"
+    - script: ./autoconf.sh build
+    - script: ./autoconf.sh test
