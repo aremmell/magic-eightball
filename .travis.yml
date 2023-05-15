@@ -8,14 +8,16 @@ branches:
 os:
   - linux
   - osx
-dist: bionic
-osx_image: xcode14.3
+dist:
+  - bionic
+osx_image:
+  - xcode14.3
 addons:
   homebrew:
     packages:
       - cmake
       - ninja
-      update: true
+    update: true
   apt:
     packages:
       - cmake
@@ -23,10 +25,9 @@ addons:
 arch:
   - amd64
   - arm64
+script:
+  - ./autoconf.sh configure
+  - ./autoconf.sh build
+  - ./autoconf.sh test
 compiler:
   - g++
-jobs:
-  include:
-    - script: "./autoconf.sh configure"
-    - script: ./autoconf.sh build
-    - script: ./autoconf.sh test
