@@ -16,7 +16,7 @@ addons:
       confinement: classic
       channel: latest/stable
   apt:
-    update: true
+    update: false
     packages:
       - ninja-build      
   homebrew:
@@ -24,6 +24,9 @@ addons:
     packages:
       - cmake
       - ninja
+env:
+  global:
+    - HOMEBREW_NO_AUTO_UPDATE=1
 arch:
   - amd64
   - arm64
