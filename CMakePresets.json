@@ -1,8 +1,8 @@
 {
-    "version": 3,
+    "version": 6,
     "cmakeMinimumRequired": {
         "major": 3,
-        "minor": 21,
+        "minor": 25,
         "patch": 0
     },
     "configurePresets": [
@@ -26,7 +26,7 @@
                 "systemVars": true
             },
             "debug": {
-                "output": false
+                "output": true
             }
         },
         {
@@ -52,7 +52,7 @@
             "displayName": "Build: default",
             "configurePreset": "default",
             "cleanFirst": true,
-            "jobs": 3,
+            "jobs": 0,
             "verbose": true
         },
         {
