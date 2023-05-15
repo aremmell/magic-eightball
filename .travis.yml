@@ -18,10 +18,11 @@ arch:
   - arm64
 compiler:
   - g++
-stages:
-  - name: configure
-    - script: ./autoconf.sh configure
-  - name: build
-    - script: ./autoconf.sh build
-  - name: test
-    - script: ./autoconf.sh test
+jobs:
+  include:
+    - stage: configure
+      - script: ./autoconf.sh configure
+    - stage: build
+      - script: ./autoconf.sh build
+    - stage: test
+      - script: ./autoconf.sh test
