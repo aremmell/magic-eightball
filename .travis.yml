@@ -8,26 +8,31 @@ branches:
 os:
   - linux
   - osx
-dist:
-  - bionic
-osx_image:
-  - xcode14.3
+dist: bionic
+addons:
+  snaps:
+    - name: cmake
+      confinement: classic
+      channel: latest/stable
+  apt:
+    update: true
+    packages:
+      - ninja-build
+osx_image: xcode14.3
 addons:
   homebrew:
+    update: true
     packages:
       - cmake
       - ninja
-    update: true
-  apt:
-    packages:
-      - cmake
-      - ninja-build
 arch:
   - amd64
   - arm64
+  - aarch64
+  - armhf
 script:
-  - ./autoconf.sh configure
-  - ./autoconf.sh build
-  - ./autoconf.sh test
+  - cmake --preset release
+  - cmake --build --preset release
+  - build/magic-eightball -q "Do you think this will work?"
 compiler:
   - g++
