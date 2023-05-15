@@ -20,8 +20,8 @@ compiler:
   - g++
 stages:
   - name: configure
-    - script: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build/install --check-system-vars -S . -B build -G Ninja
+    - script: ./autoconf.sh configure
   - name: build
-    - script: cmake --build build --clean-first --verbose --target magic-eightball
+    - script: ./autoconf.sh build
   - name: test
-    - script: build/magic-eightball -q "Will this build work?"
+    - script: ./autoconf.sh test
