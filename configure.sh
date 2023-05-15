@@ -63,7 +63,9 @@ check_cmake_version() {
     fi
 
     if [[ $_too_old = true ]]; then
-        update_cmake_from_publisher
+        if ! update_cmake_from_publisher; then
+            return 1
+        fi
     fi
 }
 
