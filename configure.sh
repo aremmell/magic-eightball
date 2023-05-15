@@ -42,8 +42,9 @@ numeric_compare() {
 
 # $1 = version number array from get_cmake_version.
 is_cmake_preset_capable() {
+    # this is the minimum CMake version mapped to the preset JSON schema version 6.
     local _min_major=3
-    local _min_minor=21
+    local _min_minor=25
     local _min_patch=0
 
     if [[ ${1} -lt $_min_major ]] || [[ ${2} -lt $_min_minor ]] || \
@@ -163,8 +164,8 @@ build_magic_eightball() {
         ${_cmake} --list-presets
         echo "========================="
 
-        ${_cmake} --debug-output --preset release && \
-        ${_cmake} --debug-output --build --preset release
+        ${_cmake} --preset release && \
+        ${_cmake} --build $(pwd)/build --preset release
     else
         # the CMake Tools extension will print out the commands
         # that *should* work without the presets file. Let's just try those.
@@ -174,10 +175,11 @@ build_magic_eightball() {
         # is clearly explained in the documentation.
         mkdir -p build/install
 
-        # this is configure, then build
-        ${_cmake} --debug-output -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build/install \
-              --check-system-vars -S$(pwd) -B$(pwd)/build -G Ninja && \
-        ${_cmake} --debug-output --verbose --build $(pwd)/build --clean-first --target magic-eightball 
+        # this is clean, configure, then build
+        ${_cmake} --build $(pwd)/build --clean-first --verbose --target clean && \
+        ${_cmake} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=build/install \
+                  --check-system-vars -S$(pwd) -B$(pwd)/build -G Ninja && \
+        ${_cmake} --build $(pwd)/build --clean-first --verbose --target magic-eightball 
     fi
 
     [[ -x "build/magic-eightball" ]] && build/magic-eightball -q "Do you think this will work?"
