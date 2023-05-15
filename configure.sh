@@ -99,12 +99,14 @@ select_cmake_binary() {
     fi
 
     local _binary="$(which cmake)"
+    local _snap_wins=false
+    local _ver=()
+    
+    _ver1=()
+    get_cmake_version "${_binary}" _ver1    
 
     if is_cmake_snap_installed; then
         # compare versions; select the higher one.
-        _ver1=()
-        get_cmake_version "${_binary}" _ver1
-
         _ver2=()
         get_cmake_version "/snap/bin/cmake" _ver2
 
@@ -117,16 +119,21 @@ select_cmake_binary() {
         _patches=0
         numeric_compare ${_ver1[2]} ${_ver2[2]} _patches
 
-        if [[ ${_majors} -lt 0 ]] || [[ ${_minors} -lt 0 ]] || [[ ${_patches} -lt 0 ]]; then
-            _binary="/snap/bin/cmake"
-            eval $2'=(${_ver1[@]})'
-        else
-            eval $2'=(${_ver2[@]})'
+        if [[ ${_majors} -gt 0 ]] || [[ ${_minors} -gt 0 ]] || [[ ${_patches} -gt 0 ]]; then
+            _snap_wins=true
         fi
+    fi
+
+    if [[ ${_snap_wins} = true ]]; then
+        _binary="/snap/bin/cmake"
+        _ver=("${_ver2[@]}")
+    else
+        _ver=("${_ver1[@]}")
     fi
 
     echo "Using cmake = ${_binary}"
     eval $1'=${_binary}'
+    eval $2'=(${_ver[@]})'
 }
 
 build_magic_eightball() {
@@ -141,7 +148,7 @@ build_magic_eightball() {
     _cmake="$(which cmake)"
     _cmake_ver=()
     select_cmake_binary _cmake _cmake_ver
-    
+
     local _use_presets=false
     if is_cmake_preset_capable ${_cmake_ver[@]}; then
         _use_presets=true
@@ -152,7 +159,7 @@ build_magic_eightball() {
     fi
 
     if [[ ${_use_presets} = true ]]; then
-        echo "=== Available presets ==="
+        echo "========================="
         ${_cmake} --list-presets
         echo "========================="
 
