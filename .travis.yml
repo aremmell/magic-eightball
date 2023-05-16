@@ -27,8 +27,6 @@ addons:
 arch:
   - amd64
   - arm64
-  - aarch64
-  - armhf
 before_script:
   - ./configure.sh cmake-info
 script:
