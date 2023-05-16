@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 # $1 = the path to cmake
 # $2 = the name of a variable to receive
