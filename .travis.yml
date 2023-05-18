@@ -5,11 +5,7 @@ language:
 branches:
   only:
     - master
-os:
-  - linux
-  - osx
 dist: bionic
-osx_image: xcode14.2
 addons:
   snaps:
     - name: cmake
@@ -24,12 +20,24 @@ addons:
     packages:
       - cmake
       - ninja
-arch:
-  - amd64
-  - arm64
+jobs:
+  include:
+    - os: linux
+      arch: amd64
+      compiler: g++
+    - os: linux
+      arch: amd64
+      compiler: clang++
+    - os: linux
+      arch: arm64
+      compiler: g++
+    - os: linux
+      arch: arm64
+      compiler: clang++
+    - os: osx
+      osx_image: xcode14.2
+      compiler: clang++      
 before_script:
   - ./configure.sh cmake-info
 script:
   - ./configure.sh build
-compiler:
-  - g++
