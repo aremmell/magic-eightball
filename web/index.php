@@ -57,10 +57,13 @@
         <meta property="og:title" content="<?php echo_loc_string(LOC_MAGIC_EIGHTBALL); ?>">
 
         <?php $show_question = $appState->compute_render_mode() == RenderMode::DisplayAnswer; ?>
+
         <meta property="og:description" content="<?php echo($show_question ? ($appState->get_question_value() . "&nbsp;" . LOC_OG_DESC_PERMALINK) : LOC_MAGIC_EIGHTBALL_DESC); ?>">
         <meta property="og:url" content="<?php echo($show_question ? $appState->get_permalink() : "https://rml.dev/magic-eightball") ?>">
         <meta property="og:type" content="website">
         <meta property="og:image" content="https://rml.dev/magic-eightball/img/og-image.png">
+
+        <meta name="twitter:card" content="summary"></meta>
 
         <link rel="icon" href="favicon.png">
         <link rel="icon" href="favicon.ico" sizes="any">
