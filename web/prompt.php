@@ -84,7 +84,7 @@
             <button type="submit" class="eb-submit-button btn btn-lg btn-outline-secondary"><?php echo_loc_string(LOC_SUBMIT_BUTTON); ?></button>
             <div class="invalid-feedback">
                 <?php echo_loc_string(LOC_MISSING_INPUT); ?>
-            </div>                
+            </div>
         </div>
     </form>
 </form>
