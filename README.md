@@ -43,4 +43,4 @@ For those of you wondering how it generates pseudo-random answers, it utilizes t
 
 ### TODO
 
-- [ ] I'll think of something.
+- [ ] URL is hard-coded in Open Graph tags for images and the current URL.
