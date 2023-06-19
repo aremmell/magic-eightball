@@ -29,5 +29,6 @@ define("LOC_TRY_AGAIN",            "Let's try again!");
 define("LOC_MISSING_INPUT",        "You've got to type a question.");
 define("LOC_COPY_PERMALINK",       "Copy permalink");
 define("LOC_HOME",                 "Back");
-define("LOC_MAGIC_EIGHTBALL_DESC", "The Magic Eightball is an enigmatic, mystical software program that knows the answers to questions you haven't even asked. Go ahead, ask...");
+define("LOC_MAGIC_EIGHTBALL_DESC", "The Magic Eightball knows the answer to all your questions. It's pretty much the ChatGPT of the 1970s...");
+define("LOC_OG_DESC_PERMALINK",    "Find out what the Magic Eightball said here.");
 ?>

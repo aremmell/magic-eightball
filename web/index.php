@@ -53,11 +53,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Ryan M. Lederman <lederman@gmail.com>">
+
         <meta property="og:title" content="<?php echo_loc_string(LOC_MAGIC_EIGHTBALL); ?>">
-        <meta property="og:description" content="<?php echo_loc_string(LOC_MAGIC_EIGHTBALL_DESC); ?>">
+
+        <?php $show_question = $appState->compute_render_mode() == RenderMode::DisplayAnswer; ?>
+        <meta property="og:description" content="<?php echo($show_question ? ($appState->get_question_value() . "&nbsp;" . LOC_OG_DESC_PERMALINK) : LOC_MAGIC_EIGHTBALL_DESC); ?>">
+        <meta property="og:url" content="<?php echo($show_question ? $appState->get_permalink() : "https://rml.dev/magic-eightball") ?>">
         <meta property="og:type" content="website">
-        <meta property="og:image" content="">
-        <meta property="og:url" content="https://rml.dev/magic-eightball">
+        <meta property="og:image" content="/img/og-image.png">
 
         <link rel="icon" href="favicon.png">
         <link rel="icon" href="favicon.ico" sizes="any">
