@@ -14,7 +14,7 @@ addons:
   apt:
     update: true
     packages:
-      - ninja-build      
+      - ninja-build
   homebrew:
     update: true
     packages:
@@ -36,7 +36,7 @@ jobs:
       compiler: clang++
     - os: osx
       osx_image: xcode14.2
-      compiler: clang++      
+      compiler: clang++
 before_script:
   - ./configure.sh cmake-info
 script:
