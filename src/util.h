@@ -45,7 +45,7 @@ namespace magic_eightball
         return retval;
     }
 
-   inline  uint32_t crc32c(uint32_t crc, const unsigned char *buf, size_t len)
+   inline uint32_t crc32c(uint32_t crc, const unsigned char *buf, size_t len)
     {
         constexpr uint32_t POLY = 0xedb88320U;
         int k = 0;

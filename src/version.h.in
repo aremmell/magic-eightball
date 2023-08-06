@@ -22,4 +22,4 @@ namespace magic_eightball
     constexpr uint8_t VERSION_MINOR          = ${PROJECT_VERSION_MINOR};
     constexpr uint8_t VERSION_PATCH          = ${PROJECT_VERSION_PATCH};
 
-}; // !namespace magic_eightball
+} // !namespace magic_eightball
