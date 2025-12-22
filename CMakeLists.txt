@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 4.2.1)
 
 # variables
 set(PROJECT_NAME magic-eightball)
